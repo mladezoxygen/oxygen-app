@@ -605,7 +605,7 @@ input:checked+.slider::before{transform:translateX(18px)}
 
     <!-- ANON -->
     <div class="sec" id="sec-anon">
-      <div class="ph"><h1>Anonymní formulář</h1><p>Pošli anonymní žádost – vidí ji jen modlitebníci a admin</p></div>
+      <div class="ph"><h1>Anonymní formulář</h1><p>Pošli anonymní žádost – tým se za tebe bude modlit</p></div>
       <div class="card card-top" style="max-width:490px;margin-bottom:22px">
         <span class="lbl" style="margin-bottom:9px">✦ Anonymní žádost</span>
         <div class="fg" style="margin-bottom:9px"><label>Kategorie</label>
@@ -1011,12 +1011,10 @@ function updateBadges(){
   document.getElementById('s3').textContent=diary.length;
   const aq=reqs.filter(r=>!r.answered).length;
   const bq=document.getElementById('bReq');bq.textContent=aq;bq.style.display=aq?'inline':'none';
-  // Anon badge – jen pro modlitebníky a admin
-  if(canMgr()){
-    const anon=window._anon||[];
-    const anonCount=anon.filter(r=>!r.archived).length;
-    const ba2=document.getElementById('bAnon');if(ba2){ba2.textContent=anonCount;ba2.style.display=anonCount?'inline':'none';}
-  }
+  // Anon badge – pro všechny přihlášené
+  const anon=window._anon||[];
+  const anonCount=anon.filter(r=>!r.archived).length;
+  const ba2=document.getElementById('bAnon');if(ba2){ba2.textContent=anonCount;ba2.style.display=anonCount?'inline':'none';}
   const pend=Object.values(users).filter(u=>u.role==='pending').length;
   const ba=document.getElementById('bAdmin');if(ba){ba.textContent=pend;ba.style.display=pend?'inline':'none';}
   const pc=document.getElementById('pCnt');if(pc)pc.textContent=pend?` (${pend})`:'';
@@ -1271,10 +1269,6 @@ window.submitAnon=async()=>{const text=document.getElementById('anonText').value
 function renderAnon(){
   const inbox=document.getElementById('anonInbox');
   const tabs=document.getElementById('anonTabs');
-  if(!canMgr()){
-    if(tabs)tabs.style.display='none';
-    inbox.innerHTML=`<div class="card" style="max-width:490px;color:var(--muted);text-align:center;padding:24px;font-size:.83rem">🔒 Anonymní žádosti vidí pouze modlitebníci a admin.</div>`;return;
-  }
   if(tabs)tabs.style.display='flex';
   const all=window._anon||[];
   const list=_anonFilter==='archived'

@@ -32,8 +32,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 #authWrap{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;padding:20px;padding-top:max(20px,env(safe-area-inset-top))}
 .abox{background:rgba(49,18,96,0.92);border:1px solid var(--border-l);border-radius:24px;padding:36px 28px;width:100%;max-width:410px;backdrop-filter:blur(20px);box-shadow:0 32px 80px rgba(0,0,0,0.5);animation:fu .5s ease;margin:auto 0}
 @keyframes fu{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-@keyframes collapse-out{0%{opacity:1;transform:scaleY(1) translateY(0);max-height:300px}60%{opacity:0;transform:scaleY(.92) translateY(-4px)}100%{opacity:0;transform:scaleY(.88) translateY(-6px);max-height:0;margin:0;padding:0}}
-@keyframes check-pulse{0%{transform:scale(1)}40%{transform:scale(1.18)}70%{transform:scale(.94)}100%{transform:scale(1)}}
 .alogo{text-align:center;margin-bottom:28px}
 .alogo-icon{width:68px;height:68px;border-radius:18px;margin:0 auto 12px;background:linear-gradient(135deg,var(--purple),var(--purple-d));display:flex;align-items:center;justify-content:center;font-size:1.9rem;box-shadow:0 8px 28px rgba(123,47,190,0.5)}
 .alogo h2{font-family:'Cinzel',serif;font-size:1.7rem;color:var(--white);letter-spacing:.06em}
@@ -1099,21 +1097,7 @@ window.sendCmt=async(cn,docId,isAnon,createdBy)=>{
 };
 window.delCmt=async(cn,id,docId,isAnon,createdBy)=>{if(!confirm('Smazat komentář?'))return;try{await deleteDoc(doc(db,cn+'_comments',id));await refreshCmts(cn,docId,isAnon==='true',createdBy);toast('Komentář smazán');}catch(e){toast('Chyba: '+e.message);}};
 
-// ── ANIMATE COLLAPSE ─────────────────────────────────────────────────────
-function animateCollapse(el,cb){
-  if(!el){cb();return;}
-  el.style.transformOrigin='top center';
-  el.style.animation='collapse-out .38s ease forwards';
-  el.style.overflow='hidden';
-  el.style.pointerEvents='none';
-  setTimeout(cb,340);
-}
-function animateCheck(el,cb){
-  if(!el){cb();return;}
-  el.style.animation='check-pulse .35s ease';
-  setTimeout(()=>{el.style.animation='';cb();},200);
-}
-
+// ── REQUESTS ──────────────────────────────────────────────────────────────
 window.addRequest=async()=>{
   const text=document.getElementById('reqText').value.trim();const cat=document.getElementById('reqCat').value;
   if(!text){toast('✏️ Napiš prosím žádost');return;}
@@ -1140,7 +1124,7 @@ function renderReqs(){
     const pNames=(r.prayedBy||[]).map(un=>{const u2=allU[un];return(u2&&u2.emoji?u2.emoji+' ':'')+((u2&&u2.name?u2.name:un).split(' ')[0]);});
     const pHTML=pNames.length?`<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:3px;align-items:center"><span style="font-size:.7rem;color:var(--muted)">Modlil/a se: </span>${pNames.map(n=>`<span style="font-size:.71rem;background:rgba(123,47,190,.15);border:1px solid var(--border);border-radius:20px;padding:1px 7px;color:var(--purple-xl)">${esc(n)}</span>`).join('')}</div>`:'';
     const publicBadge=isPublic?`<span class="tag" style="background:rgba(255,209,102,.15);color:var(--gold);border:1px solid rgba(255,209,102,.3)">🌐 Veřejná</span>`:'';
-    return`<div class="pc ${r.answered?'answered':''}" data-rid="${r._id}">
+    return`<div class="pc ${r.answered?'answered':''}">
       <div class="rh"><div class="rm2">${u?.emoji?`<span style="font-size:.95rem">${u.emoji}</span>`:''}<span class="rn">${esc(r.name)}</span>${publicBadge}<span class="tag t-${r.cat}">${r.cat}</span><span class="tag" style="background:rgba(255,255,255,.07);color:var(--muted);font-size:.65rem">${(r.reqType||"jednorázová")==="opakovaná"?"🔄 Opakovaná":(r.reqType||"jednorázová")==="dlouhodobá"?"📅 Dlouhodobá":"🕯 Jednorázová"}</span></div><div class="rd">${fmtTs(r.ts)}</div></div>
       <p class="rt">${esc(r.text)}</p>
       ${pHTML}
@@ -1156,7 +1140,7 @@ function renderReqs(){
   }).join('');
 }
 window.togglePray=async id=>{const r=(window._req||[]).find(x=>x._id===id);if(!r)return;const p=(r.prayedBy||[]).includes(CU.username);try{await updateDoc(doc(db,'requests',id),{prayedBy:p?arrayRemove(CU.username):arrayUnion(CU.username)});toast(p?'Modlitba odebrána':'✝ Modlíš se spolu s týmem!');}catch(e){toast('Chyba: '+e.message);}};
-window.toggleAns=async id=>{const r=(window._req||[]).find(x=>x._id===id);if(!r)return;if(r.createdBy!==CU.username&&!isAdmin()){toast("Jen autor může měnit stav.");return;}if(!r.answered){const card=document.querySelector(`[data-rid="${id}"]`);animateCollapse(card,async()=>{try{await updateDoc(doc(db,"requests",id),{answered:true});toast("✓ Sláva Bohu!");}catch(e){toast("Chyba: "+e.message);}});}else{try{await updateDoc(doc(db,"requests",id),{answered:false});toast("Vráceno jako aktivní");}catch(e){toast("Chyba: "+e.message);}}};
+window.toggleAns=async id=>{const r=(window._req||[]).find(x=>x._id===id);if(!r)return;if(r.createdBy!==CU.username&&!isAdmin()){toast('Jen autor může měnit stav.');return;}try{await updateDoc(doc(db,'requests',id),{answered:!r.answered});toast(r.answered?'Vráceno jako aktivní':'✓ Sláva Bohu!');}catch(e){toast('Chyba: '+e.message);}};
 window.delReq=async id=>{const r=(window._req||[]).find(x=>x._id===id);if(!r)return;if(!isAdmin()&&r.createdBy!==CU.username){toast('Nemáš oprávnění.');return;}if(!confirm('Opravdu smazat?'))return;try{await deleteDoc(doc(db,'requests',id));toast('Smazáno');}catch(e){toast('Chyba: '+e.message);}};
 
 // ── CHECKLIST ─────────────────────────────────────────────────────────────
@@ -1172,7 +1156,7 @@ function renderChk(){
     const prayed=(item.prayedBy||[]).includes(CU.username);
     const pNames=(item.prayedBy||[]).map(un=>{const u=allU[un];return(u&&u.emoji?u.emoji+' ':'')+((u&&u.name?u.name:un).split(' ')[0]);});
     const pHTML=pNames.length?`<div style="margin-top:5px;display:flex;flex-wrap:wrap;gap:3px;align-items:center"><span style="font-size:.7rem;color:var(--muted)">Modlil/a se: </span>${pNames.map(n=>`<span style="font-size:.71rem;background:rgba(123,47,190,.15);border:1px solid var(--border);border-radius:20px;padding:1px 7px;color:var(--purple-xl)">${esc(n)}</span>`).join('')}</div>`:'';
-    return`<div class="ci ${item.done?'done':''}" data-cid="${item._id}">
+    return`<div class="ci ${item.done?'done':''}">
       <div class="cb ${item.done?'on':''}" onclick="toggleChk('${item._id}')"></div>
       <div style="flex:1;min-width:0">
         <div class="it">${esc(item.text)}</div>
@@ -1184,7 +1168,7 @@ function renderChk(){
     </div>`;
   }).join('');
 }
-window.toggleChk=async id=>{const item=(window._chk||[]).find(x=>x._id===id);if(!item)return;if(!item.done){const card=document.querySelector(`[data-cid="${id}"]`);animateCheck(card?.querySelector(".cb"),()=>{});animateCollapse(card,async()=>{try{await updateDoc(doc(db,"checklist",id),{done:true});toast("✓ Sláva Bohu!");}catch(e){toast("Chyba: "+e.message);}});}else{try{await updateDoc(doc(db,"checklist",id),{done:false});}catch(e){toast("Chyba: "+e.message);}}};
+window.toggleChk=async id=>{const item=(window._chk||[]).find(x=>x._id===id);if(!item)return;try{await updateDoc(doc(db,'checklist',id),{done:!item.done});if(!item.done)toast('✓ Sláva Bohu!');}catch(e){toast('Chyba: '+e.message);}};
 window.toggleChkPray=async id=>{const item=(window._chk||[]).find(x=>x._id===id);if(!item)return;const prayed=(item.prayedBy||[]).includes(CU.username);try{await updateDoc(doc(db,'checklist',id),{prayedBy:prayed?arrayRemove(CU.username):arrayUnion(CU.username)});toast(prayed?'Modlitba odebrána':'🙏 Modlíš se!');}catch(e){toast('Chyba: '+e.message);}};
 window.delChk=async id=>{const item=(window._chk||[]).find(x=>x._id===id);if(!item)return;if(!isAdmin()&&item.createdBy!==CU.username){toast('Nemáš oprávnění.');return;}if(!confirm('Smazat?'))return;try{await deleteDoc(doc(db,'checklist',id));toast('Smazáno');}catch(e){toast('Chyba: '+e.message);}};
 
@@ -1303,7 +1287,7 @@ function renderAnon(){
     const senderBadge=isPublic
       ?`<span class="tag" style="background:rgba(255,209,102,.15);color:var(--gold);border:1px solid rgba(255,209,102,.3)">🌐 Veřejná</span>${r.name&&r.name!=='Anonymní'?`<span style="font-size:.78rem;color:var(--text);font-weight:700">${esc(r.name)}</span>`:''}`
       :`<span class="tag t-anon">Anonymní</span>`;
-    return`<div class="pc${isArchived?' answered':''}" data-aid="${r._id}" style="margin-bottom:9px;${isArchived?'opacity:.6':''}">
+    return`<div class="pc${isArchived?' answered':''}" style="margin-bottom:9px;${isArchived?'opacity:.6':''}">
       <div class="rh"><div class="rm2">${senderBadge}<span class="tag t-${r.cat}">${r.cat}</span>${isArchived?`<span class="tag" style="background:rgba(255,255,255,.07);color:var(--muted)">📦 Archivováno</span>`:''}</div><div class="rd">${fmtTs(r.ts)}</div></div>
       <p class="rt">${esc(r.text)}</p>
       ${pHTML}
@@ -1317,7 +1301,7 @@ function renderAnon(){
     </div>`;
   }).join('');
 }
-window.archiveAnon=async id=>{const card=document.querySelector(`[data-aid="${id}"]`);animateCollapse(card,async()=>{try{await updateDoc(doc(db,'anon',id),{archived:true});toast('📦 Žádost uzavřena');}catch(e){toast('Chyba: '+e.message);}});};
+window.archiveAnon=async id=>{try{await updateDoc(doc(db,'anon',id),{archived:true});toast('📦 Žádost uzavřena');}catch(e){toast('Chyba: '+e.message);}};
 window.unarchiveAnon=async id=>{try{await updateDoc(doc(db,'anon',id),{archived:false});toast('↩ Žádost obnovena');}catch(e){toast('Chyba: '+e.message);}};
 window.tgPrayAnon=async id=>{const r=(window._anon||[]).find(x=>x._id===id);if(!r)return;const p=(r.prayedBy||[]).includes(CU.username);try{await updateDoc(doc(db,'anon',id),{prayedBy:p?arrayRemove(CU.username):arrayUnion(CU.username)});toast(p?'Modlitba odebrána':'🙏 Modlíš se!');}catch(e){toast('Chyba: '+e.message);}};
 window.delAnon=async id=>{if(!isAdmin()){toast('Jen admin může mazat.');return;}if(!confirm('Smazat?'))return;try{await deleteDoc(doc(db,'anon',id));toast('Smazáno');}catch(e){toast('Chyba: '+e.message);}};

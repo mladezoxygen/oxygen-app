@@ -1024,19 +1024,17 @@ window.saveCalWatch=async iso=>{
   try{await addDoc(collection(db,'watch'),{person,date:dateLabel,startDate:iso,endDate:endVal||iso,topics,createdBy:CU.username,ts:serverTimestamp()});document.querySelector('.cal-popup')?.remove();calPopup=null;toast('⌚ Stráž přidána');}catch(e){toast('Chyba: '+e.message);}
 };
 function gcalUrl(w){
+  // Google Calendar event URL for all-day event
+  if(!w.startDate)return null;
+  const fmt=d=>d.replace(/-/g,''); // YYYYMMDD
+  const start=fmt(w.startDate);
+  const end=w.endDate&&w.endDate!==w.startDate
+    ? fmt(new Date(new Date(w.endDate).getTime()+86400000).toISOString().slice(0,10)) // end is exclusive in gcal
+    : fmt(new Date(new Date(w.startDate).getTime()+86400000).toISOString().slice(0,10));
   const title=encodeURIComponent('Modlitební stráž – '+w.person);
-  const details=encodeURIComponent((w.topics&&w.topics.length?'Témata: '+w.topics.join(', ')+'\n':'')+'Oxygen – Modlitební tým');
-  let datesPart='';
-  if(w.startDate){
-    const fmt=d=>d.replace(/-/g,'');
-    const start=fmt(w.startDate);
-    // Google Calendar end date is exclusive, so add 1 day
-    const endRaw=w.endDate&&w.endDate!==w.startDate?w.endDate:w.startDate;
-    const end=fmt(new Date(new Date(endRaw).getTime()+86400000).toISOString().slice(0,10));
-    datesPart='&dates='+start+'/'+end;
-  }
-  // Always return a URL – without dates Google Calendar opens with just the title prefilled
-  return'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+title+'&details='+details+datesPart+'&sf=true&output=xml';
+  const details=encodeURIComponent((w.topics&&w.topics.length?'Témata: '+w.topics.join(', ')+'
+':'')+'Oxygen – Modlitební tým');
+  return`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${details}&sf=true&output=xml`;
 }
 
 function renderWatch(){
@@ -1051,7 +1049,7 @@ function renderWatch(){
       <div style="display:flex;justify-content:space-between;align-items:flex-start">
         <div><div style="font-family:'Cinzel',serif;font-size:.77rem;color:${isCurr?'var(--gold)':isFuture?'var(--purple-xl)':'var(--muted)'}">✦ ${isCurr?'Aktuální stráž':isFuture?'Plánovaná stráž':'Minulá stráž'}</div><div style="font-weight:800;font-size:.92rem;color:var(--white);margin-top:2px">${esc(w.person)}</div><div style="color:var(--muted);font-size:.76rem;margin-top:1px">${esc(w.date)}</div></div>
         <div style="display:flex;gap:6px;align-items:center">
-          <a href="${gcalUrl(w)}" target="_blank" class="bs b-ghost" style="text-decoration:none;font-size:.72rem" title="Přidat do Google kalendáře">📅 Google Kalend.</a>
+          ${gcal?`<a href="${gcal}" target="_blank" class="bs b-ghost" style="text-decoration:none;font-size:.72rem" title="Přidat do Google kalendáře">📅 Google Kalend.</a>`:''}
           ${canDel?`<button class="bs b-del" onclick="delWatch('${w._id}')">🗑</button>`:''}
         </div>
       </div><div class="wt">${(w.topics||[]).map(t=>`<span class="wtag">${esc(t)}</span>`).join('')}</div>

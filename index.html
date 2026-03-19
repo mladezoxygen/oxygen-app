@@ -1023,6 +1023,20 @@ window.saveCalWatch=async iso=>{
   const dateLabel=sd.toLocaleDateString('cs-CZ',{day:'numeric',month:'numeric'})+(endVal&&endVal!==iso?' – '+ed.toLocaleDateString('cs-CZ',{day:'numeric',month:'numeric',year:'numeric'}):'. '+sd.getFullYear());
   try{await addDoc(collection(db,'watch'),{person,date:dateLabel,startDate:iso,endDate:endVal||iso,topics,createdBy:CU.username,ts:serverTimestamp()});document.querySelector('.cal-popup')?.remove();calPopup=null;toast('⌚ Stráž přidána');}catch(e){toast('Chyba: '+e.message);}
 };
+function gcalUrl(w){
+  // Google Calendar event URL for all-day event
+  if(!w.startDate)return null;
+  const fmt=d=>d.replace(/-/g,''); // YYYYMMDD
+  const start=fmt(w.startDate);
+  const end=w.endDate&&w.endDate!==w.startDate
+    ? fmt(new Date(new Date(w.endDate).getTime()+86400000).toISOString().slice(0,10)) // end is exclusive in gcal
+    : fmt(new Date(new Date(w.startDate).getTime()+86400000).toISOString().slice(0,10));
+  const title=encodeURIComponent('Modlitební stráž – '+w.person);
+  const details=encodeURIComponent((w.topics&&w.topics.length?'Témata: '+w.topics.join(', ')+'
+':'')+'Oxygen – Modlitební tým');
+  return`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${details}&sf=true&output=xml`;
+}
+
 function renderWatch(){
   const list=[...(window._watch||[])].reverse();const el=document.getElementById('watchList');
   if(!list.length){el.innerHTML=`<div class="empty"><div class="ei">⌚</div><p>Klikni na den v kalendáři pro přidání stráže</p></div>`;return;}
@@ -1030,10 +1044,14 @@ function renderWatch(){
   el.innerHTML=list.map(w=>{
     const isFuture=w.startDate&&new Date(w.startDate)>today;const isPast=w.endDate&&new Date(w.endDate)<today;const isCurr=!isFuture&&!isPast;
     const canDel=isAdmin()||w.createdBy===CU.username;
+    const gcal=gcalUrl(w);
     return`<div class="wc ${isCurr?'curr':isFuture?'future':''}">
       <div style="display:flex;justify-content:space-between;align-items:flex-start">
         <div><div style="font-family:'Cinzel',serif;font-size:.77rem;color:${isCurr?'var(--gold)':isFuture?'var(--purple-xl)':'var(--muted)'}">✦ ${isCurr?'Aktuální stráž':isFuture?'Plánovaná stráž':'Minulá stráž'}</div><div style="font-weight:800;font-size:.92rem;color:var(--white);margin-top:2px">${esc(w.person)}</div><div style="color:var(--muted);font-size:.76rem;margin-top:1px">${esc(w.date)}</div></div>
-        ${canDel?`<button class="bs b-del" onclick="delWatch('${w._id}')">🗑</button>`:''}
+        <div style="display:flex;gap:6px;align-items:center">
+          ${gcal?`<a href="${gcal}" target="_blank" class="bs b-ghost" style="text-decoration:none;font-size:.72rem" title="Přidat do Google kalendáře">📅 Google Kalend.</a>`:''}
+          ${canDel?`<button class="bs b-del" onclick="delWatch('${w._id}')">🗑</button>`:''}
+        </div>
       </div><div class="wt">${(w.topics||[]).map(t=>`<span class="wtag">${esc(t)}</span>`).join('')}</div>
     </div>`;
   }).join('');

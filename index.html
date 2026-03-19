@@ -654,7 +654,7 @@ input:checked+.slider::before{transform:translateX(18px)}
         <div class="chart-wrap"><div class="chart-title">📋 Žádosti o modlitbu</div><canvas id="chartReqs" height="160"></canvas></div>
         <div class="chart-wrap"><div class="chart-title">✓ Vyslyšené modlitby</div><canvas id="chartAns" height="160"></canvas></div>
       </div>
-      <div class="chart-wrap"><div class="chart-title">📊 Kategorie žádostí (celkové)</div><canvas id="chartCats" height="130"></canvas></div>
+      <div class="chart-wrap"><div class="chart-title">📊 Kategorie žádostí (celkové)</div><div style="max-width:320px;margin:0 auto"><canvas id="chartCats" height="260"></canvas></div></div>
       <div class="chart-wrap"><div class="chart-title">👥 Aktivita uživatelů (modlitby v měsíci)</div><canvas id="chartActivity" height="130"></canvas></div>
       <div class="chart-wrap"><div class="chart-title">⌚ Modlitební stráž – přehled měsíce</div><div id="watchHistory"></div></div>
       <div class="chart-wrap"><div class="chart-title">📈 Celkové shrnutí</div><div id="statsSummary"></div></div>
@@ -1430,7 +1430,7 @@ function renderStats(){
   const cats=['osobní','rodina','zdraví','vztahy','práce','duchovní','jiné'];
   const catColors=['rgba(155,79,222,.7)','rgba(255,209,102,.7)','rgba(239,71,111,.7)','rgba(255,140,60,.7)','rgba(80,180,255,.7)','rgba(6,214,160,.7)','rgba(180,180,180,.5)'];
   const catData=cats.map(c=>reqs.filter(r=>r.cat===c).length);
-  const cfgPie={responsive:true,plugins:{legend:{display:true,labels:{color:'#9B8FBB',font:{size:10},padding:10}}}};
+  const cfgPie={responsive:true,maintainAspectRatio:true,plugins:{legend:{display:true,position:'bottom',labels:{color:'#9B8FBB',font:{size:11},padding:12}}}};
   mkC('chartCats',cats.map(c=>c.charAt(0).toUpperCase()+c.slice(1)),catData,catColors,catColors,cfgPie,'doughnut');
 
   // Overview cards for this month

@@ -610,6 +610,7 @@ input:checked+.slider::before{transform:translateX(18px)}
         <div class="fg" style="margin-bottom:12px"><label>Tvoje žádost</label><textarea id="anonText" placeholder="Napiš anonymně, za co se chceš modlit…" maxlength="800" style="min-height:95px"></textarea></div>
         <button class="bp" style="width:auto;padding:9px 20px" onclick="submitAnon()">📩 Odeslat anonymně</button>
       </div>
+      <div class="tabs" id="anonTabs" style="margin-bottom:14px"><button class="tab on" onclick="setAnonF('active',this)">Aktivní</button><button class="tab" onclick="setAnonF('archived',this)">📦 Archivované</button></div>
       <div id="anonInbox"></div>
     </div>
 
@@ -1009,7 +1010,7 @@ function updateBadges(){
   // Anon badge – jen pro modlitebníky a admin
   if(canMgr()){
     const anon=window._anon||[];
-    const anonCount=anon.length;
+    const anonCount=anon.filter(r=>!r.archived).length;
     const ba2=document.getElementById('bAnon');if(ba2){ba2.textContent=anonCount;ba2.style.display=anonCount?'inline':'none';}
   }
   const pend=Object.values(users).filter(u=>u.role==='pending').length;
@@ -1251,29 +1252,50 @@ function renderWatch(){
 window.delWatch=async id=>{const w=(window._watch||[]).find(x=>x._id===id);if(!w)return;if(!isAdmin()&&w.createdBy!==CU.username){toast('Nemáš oprávnění.');return;}if(!confirm('Smazat?'))return;try{await deleteDoc(doc(db,'watch',id));toast('Smazáno');}catch(e){toast('Chyba: '+e.message);}};
 
 // ── ANON ──────────────────────────────────────────────────────────────────
-window.submitAnon=async()=>{const text=document.getElementById('anonText').value.trim();const cat=document.getElementById('anonCat').value;if(!text){toast('✏️ Napiš žádost');return;}try{await addDoc(collection(db,'anon'),{text,cat,prayedBy:[],createdBy:CU.username,ts:serverTimestamp()});document.getElementById('anonText').value='';toast('📩 Odesláno anonymně.');}catch(e){toast('Chyba: '+e.message);}};
+let _anonFilter='active';
+window.setAnonF=(f,btn)=>{_anonFilter=f;document.querySelectorAll('#anonTabs .tab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderAnon();};
+window.submitAnon=async()=>{const text=document.getElementById('anonText').value.trim();const cat=document.getElementById('anonCat').value;if(!text){toast('✏️ Napiš žádost');return;}try{await addDoc(collection(db,'anon'),{text,cat,prayedBy:[],archived:false,createdBy:CU.username,ts:serverTimestamp()});document.getElementById('anonText').value='';toast('📩 Odesláno anonymně.');}catch(e){toast('Chyba: '+e.message);}};
 function renderAnon(){
   const inbox=document.getElementById('anonInbox');
-  if(!canMgr()){inbox.innerHTML=`<div class="card" style="max-width:490px;color:var(--muted);text-align:center;padding:24px;font-size:.83rem">🔒 Anonymní žádosti vidí pouze modlitebníci a admin.</div>`;return;}
-  const list=window._anon||[];if(!list.length){inbox.innerHTML=`<div class="empty"><div class="ei">📭</div><p>Žádné anonymní žádosti</p></div>`;return;}
+  const tabs=document.getElementById('anonTabs');
+  if(!canMgr()){
+    if(tabs)tabs.style.display='none';
+    inbox.innerHTML=`<div class="card" style="max-width:490px;color:var(--muted);text-align:center;padding:24px;font-size:.83rem">🔒 Anonymní žádosti vidí pouze modlitebníci a admin.</div>`;return;
+  }
+  if(tabs)tabs.style.display='flex';
+  const all=window._anon||[];
+  const list=_anonFilter==='archived'
+    ?all.filter(r=>r.archived)
+    :all.filter(r=>!r.archived);
+  if(!list.length){
+    inbox.innerHTML=`<div class="empty"><div class="ei">${_anonFilter==='archived'?'📦':'📭'}</div><p>${_anonFilter==='archived'?'Žádné archivované žádosti':'Žádné aktivní žádosti'}</p></div>`;return;
+  }
   const allU=window._users||{};
-  inbox.innerHTML=`<div style="font-family:'Cinzel',serif;color:var(--purple-xl);margin-bottom:11px;font-size:.87rem">📩 Přijaté anonymní žádosti</div>`+list.map(r=>{
+  inbox.innerHTML=list.map(r=>{
     const prayed=(r.prayedBy||[]).includes(CU.username);
     const pNames=(r.prayedBy||[]).map(un=>{const u2=allU[un];return(u2&&u2.emoji?u2.emoji+' ':'')+((u2&&u2.name?u2.name:un).split(' ')[0]);});
     const pHTML=pNames.length?`<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:3px;align-items:center"><span style="font-size:.7rem;color:var(--muted)">Modlil/a se: </span>${pNames.map(n=>`<span style="font-size:.71rem;background:rgba(123,47,190,.15);border:1px solid var(--border);border-radius:20px;padding:1px 7px;color:var(--purple-xl)">${esc(n)}</span>`).join('')}</div>`:'';
     const isPublic=r.source==='public';
+    const isArchived=r.archived;
     const senderBadge=isPublic
       ?`<span class="tag" style="background:rgba(255,209,102,.15);color:var(--gold);border:1px solid rgba(255,209,102,.3)">🌐 Veřejná</span>${r.name&&r.name!=='Anonymní'?`<span style="font-size:.78rem;color:var(--text);font-weight:700">${esc(r.name)}</span>`:''}`
       :`<span class="tag t-anon">Anonymní</span>`;
-    return`<div class="pc" style="margin-bottom:9px">
-      <div class="rh"><div class="rm2">${senderBadge}<span class="tag t-${r.cat}">${r.cat}</span></div><div class="rd">${fmtTs(r.ts)}</div></div>
+    return`<div class="pc${isArchived?' answered':''}" style="margin-bottom:9px;${isArchived?'opacity:.6':''}">
+      <div class="rh"><div class="rm2">${senderBadge}<span class="tag t-${r.cat}">${r.cat}</span>${isArchived?`<span class="tag" style="background:rgba(255,255,255,.07);color:var(--muted)">📦 Archivováno</span>`:''}</div><div class="rd">${fmtTs(r.ts)}</div></div>
       <p class="rt">${esc(r.text)}</p>
       ${pHTML}
-      <div class="rf"><button class="bs b-pray${prayed?' on':''}" onclick="tgPrayAnon('${r._id}')">${prayed?'🙏 Modleno':'🙏 Modlím se'}</button><span class="pc-cnt">${(r.prayedBy||[]).length}×</span>${isAdmin()?`<button class="bs b-del" style="margin-left:auto" onclick="delAnon('${r._id}')">🗑</button>`:''}</div>
-      ${cmtsHTML('anon',r._id,'true',r.createdBy)}
+      <div class="rf">
+        ${!isArchived?`<button class="bs b-pray${prayed?' on':''}" onclick="tgPrayAnon('${r._id}')">${prayed?'🙏 Modleno':'🙏 Modlím se'}</button><span class="pc-cnt">${(r.prayedBy||[]).length}×</span>`:''}
+        ${canMgr()&&!isArchived?`<button class="bs b-ans" onclick="archiveAnon('${r._id}')" style="margin-left:auto">✓ Uzavřít</button>`:''}
+        ${canMgr()&&isArchived?`<button class="bs b-ghost" onclick="unarchiveAnon('${r._id}')" style="margin-left:auto">↩ Obnovit</button>`:''}
+        ${isAdmin()?`<button class="bs b-del" ${!isArchived?'style="margin-left:4px"':''} onclick="delAnon('${r._id}')">🗑</button>`:''}
+      </div>
+      ${!isArchived?cmtsHTML('anon',r._id,'true',r.createdBy):''}
     </div>`;
   }).join('');
 }
+window.archiveAnon=async id=>{try{await updateDoc(doc(db,'anon',id),{archived:true});toast('📦 Žádost uzavřena');}catch(e){toast('Chyba: '+e.message);}};
+window.unarchiveAnon=async id=>{try{await updateDoc(doc(db,'anon',id),{archived:false});toast('↩ Žádost obnovena');}catch(e){toast('Chyba: '+e.message);}};
 window.tgPrayAnon=async id=>{const r=(window._anon||[]).find(x=>x._id===id);if(!r)return;const p=(r.prayedBy||[]).includes(CU.username);try{await updateDoc(doc(db,'anon',id),{prayedBy:p?arrayRemove(CU.username):arrayUnion(CU.username)});toast(p?'Modlitba odebrána':'🙏 Modlíš se!');}catch(e){toast('Chyba: '+e.message);}};
 window.delAnon=async id=>{if(!isAdmin()){toast('Jen admin může mazat.');return;}if(!confirm('Smazat?'))return;try{await deleteDoc(doc(db,'anon',id));toast('Smazáno');}catch(e){toast('Chyba: '+e.message);}};
 

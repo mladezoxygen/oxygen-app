@@ -156,6 +156,10 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .comment-toggle:hover{color:var(--purple-xl)}
 .comments-list{margin-top:9px}
 .comment{display:flex;gap:8px;margin-bottom:8px;animation:fu .2s ease}
+/* Animated comment box */
+.cbox-anim{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s ease,opacity .28s ease;opacity:0;overflow:hidden}
+.cbox-anim.open{grid-template-rows:1fr;opacity:1}
+.cbox-inner{min-height:0}
 .c-av{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--purple-d));display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:var(--white);flex-shrink:0;margin-top:1px}
 .c-av.ea{background:var(--surface);font-size:.9rem}
 .c-body{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:9px;padding:7px 10px}
@@ -1046,19 +1050,28 @@ async function loadComments(cn,docId){
 function cmtsHTML(cn,docId,isAnon,createdBy){
   return`<div class="comments-wrap">
     <button class="comment-toggle" onclick="toggleCmts('${cn}','${docId}','${isAnon}','${createdBy}')">💬 <span id="ctlbl-${docId}">Komentáře</span></button>
-    <div id="cbox-${docId}" style="display:none">
-      <div class="comments-list" id="clist-${docId}"></div>
-      <div class="c-input-row">
-        <textarea class="c-input" id="ci-${docId}" placeholder="Komentář…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendCmt('${cn}','${docId}','${isAnon}','${createdBy}')}"></textarea>
-        <button class="c-send" onclick="sendCmt('${cn}','${docId}','${isAnon}','${createdBy}')">↑</button>
+    <div id="cbox-${docId}" class="cbox-anim">
+      <div class="cbox-inner">
+        <div class="comments-list" id="clist-${docId}"></div>
+        <div class="c-input-row">
+          <textarea class="c-input" id="ci-${docId}" placeholder="Komentář…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendCmt('${cn}','${docId}','${isAnon}','${createdBy}')}"></textarea>
+          <button class="c-send" onclick="sendCmt('${cn}','${docId}','${isAnon}','${createdBy}')">↑</button>
+        </div>
       </div>
     </div>
   </div>`;
 }
 window.toggleCmts=async(cn,docId,isAnon,createdBy)=>{
   const box=document.getElementById('cbox-'+docId);const lbl=document.getElementById('ctlbl-'+docId);
-  if(box.style.display==='none'){box.style.display='block';lbl.textContent='Skrýt';await refreshCmts(cn,docId,isAnon==='true',createdBy);}
-  else{box.style.display='none';lbl.textContent='Komentáře';}
+  const isOpen=box.classList.contains('open');
+  if(!isOpen){
+    box.classList.add('open');
+    lbl.textContent='Skrýt';
+    await refreshCmts(cn,docId,isAnon==='true',createdBy);
+  } else {
+    box.classList.remove('open');
+    lbl.textContent='Komentáře';
+  }
 };
 async function refreshCmts(cn,docId,isAnon,createdBy){
   const el=document.getElementById('clist-'+docId);if(!el)return;

@@ -30,21 +30,43 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 #app{position:relative;z-index:1}
 /* AUTH */
 #authWrap{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;padding:20px;padding-top:max(20px,env(safe-area-inset-top))}
-.abox{background:rgba(49,18,96,0.92);border:1px solid var(--border-l);border-radius:24px;padding:36px 28px;width:100%;max-width:410px;backdrop-filter:blur(20px);box-shadow:0 32px 80px rgba(0,0,0,0.5);animation:fu .5s ease;margin:auto 0}
+.abox{background:rgba(49,18,96,0.92);border:1px solid var(--border-l);border-radius:24px;padding:36px 28px;width:100%;max-width:410px;backdrop-filter:blur(20px);box-shadow:0 32px 80px rgba(0,0,0,0.5);animation:abox-in .6s cubic-bezier(.22,.68,0,1.2) both;margin:auto 0;transition:box-shadow .3s ease}
+.abox:has(#registerForm:not([style*="display:none"])){box-shadow:0 40px 90px rgba(0,0,0,.55)}
+@keyframes overlay-bg-in{from{background:rgba(0,0,0,0);backdrop-filter:blur(0px)}to{background:rgba(0,0,0,.75);backdrop-filter:blur(6px)}}
+@keyframes overlay-bg-out{from{background:rgba(0,0,0,.75);backdrop-filter:blur(6px)}to{background:rgba(0,0,0,0);backdrop-filter:blur(0px)}}
+@keyframes pub-card-in{from{opacity:0;transform:scale(.92) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes pub-card-out{from{opacity:1;transform:scale(1) translateY(0)}to{opacity:0;transform:scale(.94) translateY(12px)}}
 @keyframes fu{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes logo-pop{0%{transform:scale(0) rotate(-15deg);opacity:0}60%{transform:scale(1.12) rotate(4deg)}80%{transform:scale(.96) rotate(-2deg)}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes logo-pulse{0%,100%{box-shadow:0 8px 28px rgba(123,47,190,.5)}50%{box-shadow:0 8px 36px rgba(123,47,190,.85),0 0 0 6px rgba(123,47,190,.15)}}
+@keyframes fg-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes form-out{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(-18px)}}
+@keyframes form-in{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
 .alogo{text-align:center;margin-bottom:28px}
-.alogo-icon{width:68px;height:68px;border-radius:18px;margin:0 auto 12px;background:linear-gradient(135deg,var(--purple),var(--purple-d));display:flex;align-items:center;justify-content:center;font-size:1.9rem;box-shadow:0 8px 28px rgba(123,47,190,0.5)}
-.alogo h2{font-family:'Cinzel',serif;font-size:1.7rem;color:var(--white);letter-spacing:.06em}
-.alogo p{color:var(--muted);font-size:.83rem;margin-top:3px}
-.atabs{display:flex;gap:6px;margin-bottom:24px;background:var(--bg2);border-radius:12px;padding:4px}
-.atab{flex:1;padding:9px;border:none;border-radius:9px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:.86rem;font-weight:700;background:transparent;color:var(--muted);transition:all .2s}
-.atab.on{background:var(--purple);color:var(--white)}
+.alogo-icon{width:68px;height:68px;border-radius:18px;margin:0 auto 12px;background:linear-gradient(135deg,var(--purple),var(--purple-d));display:flex;align-items:center;justify-content:center;font-size:1.9rem;box-shadow:0 8px 28px rgba(123,47,190,0.5);animation:logo-pop .7s cubic-bezier(.22,.68,0,1.2) .1s both,logo-pulse 3s ease 1s infinite}
+.alogo h2{font-family:'Cinzel',serif;font-size:1.7rem;color:var(--white);letter-spacing:.06em;animation:fu .5s ease .3s both}
+.alogo p{color:var(--muted);font-size:.83rem;margin-top:3px;animation:fu .5s ease .4s both}
+.atabs{display:flex;gap:6px;margin-bottom:24px;background:var(--bg2);border-radius:12px;padding:4px;animation:fu .5s ease .45s both}
+.atab{flex:1;padding:9px;border:none;border-radius:9px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:.86rem;font-weight:700;background:transparent;color:var(--muted);transition:all .25s cubic-bezier(.22,.68,0,1.2)}
+.atab.on{background:var(--purple);color:var(--white);box-shadow:0 3px 12px rgba(123,47,190,.4)}
 .fg{margin-bottom:14px}
 .fg label{display:block;font-size:.75rem;font-weight:700;color:var(--purple-xl);margin-bottom:5px;letter-spacing:.06em;text-transform:uppercase}
-.fg input,.fg select,.fg textarea{width:100%;padding:11px 15px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:11px;color:var(--text);font-family:'Nunito',sans-serif;font-size:.93rem;outline:none;transition:border-color .2s,box-shadow .2s}
-.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--purple-l);box-shadow:0 0 0 3px rgba(123,47,190,.18)}
+.fg input,.fg select,.fg textarea{width:100%;padding:11px 15px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:11px;color:var(--text);font-family:'Nunito',sans-serif;font-size:.93rem;outline:none;transition:border-color .2s,box-shadow .2s,background .2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--purple-l);box-shadow:0 0 0 3px rgba(123,47,190,.18);background:rgba(255,255,255,.09)}
+.fg input:hover:not(:focus),.fg textarea:hover:not(:focus){border-color:rgba(155,79,222,.35);background:rgba(255,255,255,.08)}
 .fg input::placeholder,.fg textarea::placeholder{color:var(--muted)}
 .fg select option{background:var(--card)}.fg textarea{resize:vertical;min-height:80px}
+/* Auth form stagger animation */
+#loginForm .fg:nth-child(1){animation:fg-in .4s ease .5s both}
+#loginForm .fg:nth-child(2){animation:fg-in .4s ease .6s both}
+#loginForm .bp{animation:fg-in .4s ease .7s both}
+#registerForm .fg:nth-child(1){animation:fg-in .4s ease .1s both}
+#registerForm .fg:nth-child(2){animation:fg-in .4s ease .18s both}
+#registerForm .fg:nth-child(3){animation:fg-in .4s ease .26s both}
+#registerForm .bp{animation:fg-in .4s ease .34s both}
+/* Switching animation */
+.auth-form-exit{animation:form-out .2s ease forwards}
+.auth-form-enter{animation:form-in .3s ease forwards}
 .bp{width:100%;padding:13px;background:linear-gradient(135deg,var(--purple),var(--purple-d));border:none;border-radius:11px;color:var(--white);font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;letter-spacing:.04em;transition:opacity .2s,transform .15s;box-shadow:0 4px 22px rgba(123,47,190,.4)}
 .bp:hover{opacity:.9;transform:translateY(-1px)}.bp:disabled{opacity:.45;transform:none;cursor:not-allowed}
 .amsg{margin-top:14px;padding:11px 15px;border-radius:9px;font-size:.85rem;text-align:center;display:none}
@@ -420,16 +442,16 @@ input:checked+.slider::before{transform:translateX(18px)}
       <button class="bp" id="rbtn" onclick="doRegister()">Odeslat žádost o přístup</button>
     </div>
     <div class="amsg" id="amsg"></div>
-    <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--border);text-align:center">
+    <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--border);text-align:center;animation:fg-in .4s ease .8s both">
       <div style="font-size:.75rem;color:var(--muted);margin-bottom:10px">Nechceš se registrovat?</div>
-      <button class="bp" style="background:rgba(255,209,102,.12);border:1px solid rgba(255,209,102,.3);color:var(--gold);box-shadow:none" onclick="openPublicPrayer()">🙏 Pošli žádost o modlitbu</button>
+      <button class="bp" style="background:rgba(255,209,102,.12);border:1px solid rgba(255,209,102,.3);color:var(--gold);box-shadow:none;transition:background .2s,transform .2s,box-shadow .2s" onmouseover="this.style.background='rgba(255,209,102,.22)';this.style.boxShadow='0 4px 18px rgba(255,209,102,.2)'" onmouseout="this.style.background='rgba(255,209,102,.12)';this.style.boxShadow='none'" onclick="openPublicPrayer()">🙏 Pošli žádost o modlitbu</button>
     </div>
   </div>
 </div>
 
 <!-- PUBLIC PRAYER OVERLAY -->
-<div id="publicPrayerOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:800;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)">
-  <div style="background:rgba(42,16,80,.97);border:1px solid var(--border-l);border-radius:22px;padding:36px 30px;width:100%;max-width:420px;box-shadow:0 32px 80px rgba(0,0,0,.6);animation:fu .4s ease;position:relative">
+<div id="publicPrayerOverlay" style="display:none;position:fixed;inset:0;z-index:800;align-items:center;justify-content:center;padding:20px">
+  <div id="pubCard" style="background:rgba(42,16,80,.97);border:1px solid var(--border-l);border-radius:22px;padding:36px 30px;width:100%;max-width:420px;box-shadow:0 32px 80px rgba(0,0,0,.6);position:relative">
     <button onclick="closePublicPrayer()" style="position:absolute;top:14px;right:16px;background:none;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer;line-height:1">✕</button>
     <div style="text-align:center;margin-bottom:22px">
       <div style="width:56px;height:56px;border-radius:15px;background:linear-gradient(135deg,var(--purple),var(--purple-d));display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 12px;box-shadow:0 6px 24px rgba(123,47,190,.4)">🙏</div>
@@ -458,7 +480,7 @@ input:checked+.slider::before{transform:translateX(18px)}
     </div>
     <button class="bp" id="pubBtn" onclick="submitPublicPrayer()">🙏 Odeslat žádost</button>
     <div id="pubMsg" class="amsg" style="margin-top:12px"></div>
-    <p style="text-align:center;font-size:.72rem;color:var(--muted);margin-top:14px">Žádosti vidí pouze členové modlitebního týmu</p>
+    <p style="text-align:center;font-size:.72rem;color:var(--muted);margin-top:14px">Bez jména půjde žádost anonymně, s jménem ji uvidí celý tým</p>
   </div>
 </div>
 
@@ -489,8 +511,8 @@ input:checked+.slider::before{transform:translateX(18px)}
       <div class="ni on" data-sec="dashboard"><span class="ni-ic">🏠</span>Přehled</div>
       <div class="ni" data-sec="requests"><span class="ni-ic">🙏</span>Žádosti<span class="nbadge" id="bReq" style="display:none">0</span></div>
       <div class="ni" data-sec="anon"><span class="ni-ic">📩</span>Anonymní formulář<span class="nbadge" id="bAnon" style="display:none">0</span></div>
+      <div class="ni" data-sec="checklist"><span class="ni-ic">✅</span>Modlitební seznam<span class="nbadge" id="bChk" style="display:none">0</span></div>
       <div class="ni" data-sec="watch"><span class="ni-ic">⌚</span>Modlitební stráž</div>
-      <div class="ni" data-sec="checklist"><span class="ni-ic">✅</span>Modlitební seznam</div>
       <div class="ni" data-sec="diary"><span class="ni-ic">📖</span>Boží hlas – Deník</div>
       <div class="ni" data-sec="chat"><span class="ni-ic">💬</span>Týmový chat<span class="nbadge" id="bChat" style="display:none">!</span></div>
       <div class="ni" data-sec="stats"><span class="ni-ic">📊</span>Statistiky</div>
@@ -575,7 +597,7 @@ input:checked+.slider::before{transform:translateX(18px)}
 
     <!-- CHECKLIST -->
     <div class="sec" id="sec-checklist">
-      <div class="ph"><h1>Modlitební seznam</h1><p>Zapisujte a zaškrtávejte vyslyšené modlitby</p></div>
+      <div class="ph"><h1>Modlitební seznam</h1><p>Zapisujte a zaškrtávejte splněné modlitby</p></div>
       <div class="card card-top" id="chkAddCard" style="margin-bottom:16px">
         <span class="lbl" style="margin-bottom:9px">✦ Přidat do seznamu</span>
         <div class="irow">
@@ -584,7 +606,7 @@ input:checked+.slider::before{transform:translateX(18px)}
         </div>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:7px;margin-bottom:14px">
-        <div class="tabs" style="margin-bottom:0"><button class="tab on" onclick="setCF('all',this)">Vše</button><button class="tab" onclick="setCF('active',this)">Aktivní</button><button class="tab" onclick="setCF('done',this)">✓ Vyslyšené</button></div>
+        <div class="tabs" style="margin-bottom:0"><button class="tab on" onclick="setCF('all',this)">Vše</button><button class="tab" onclick="setCF('active',this)">Aktivní</button><button class="tab" onclick="setCF('done',this)">✓ Splněné</button></div>
         <button class="bs b-exp" style="flex-shrink:0" onclick="exportChecklist()">📥 Export Excel</button>
       </div>
       <div id="chkList"><div class="loading"><div class="spin"></div>Načítám…</div></div>
@@ -824,7 +846,7 @@ function renderBanners(){
 let _pubName='';
 window.openPublicPrayer=()=>{
   const el=document.getElementById('publicPrayerOverlay');
-  el.style.display='flex';
+  const card=document.getElementById('pubCard');
   _pubName='';
   document.getElementById('pubMsg').style.display='none';
   document.getElementById('pubText').value='';
@@ -832,9 +854,23 @@ window.openPublicPrayer=()=>{
   document.getElementById('pubBtn').disabled=false;
   document.getElementById('pubBtn').textContent='🙏 Odeslat žádost';
   updatePubHint();
+  // Show with animation
+  el.style.display='flex';
+  el.style.background='rgba(0,0,0,0)';
+  el.style.backdropFilter='blur(0px)';
+  el.style.animation='overlay-bg-in .3s ease forwards';
+  card.style.animation='pub-card-in .35s cubic-bezier(.22,.68,0,1.2) forwards';
 };
 window.closePublicPrayer=()=>{
-  document.getElementById('publicPrayerOverlay').style.display='none';
+  const el=document.getElementById('publicPrayerOverlay');
+  const card=document.getElementById('pubCard');
+  card.style.animation='pub-card-out .22s ease forwards';
+  el.style.animation='overlay-bg-out .28s ease forwards';
+  setTimeout(()=>{
+    el.style.display='none';
+    el.style.animation='';
+    card.style.animation='';
+  },260);
 };
 window.onPubNameChange=el=>{
   _pubName=el.value.trim();
@@ -898,10 +934,38 @@ document.getElementById('publicPrayerOverlay').addEventListener('click',e=>{
 
 // ── AUTH ──────────────────────────────────────────────────────────────────
 window.switchAuth=mode=>{
-  document.getElementById('loginForm').style.display=mode==='login'?'block':'none';
-  document.getElementById('registerForm').style.display=mode==='register'?'block':'none';
+  const login=document.getElementById('loginForm');
+  const reg=document.getElementById('registerForm');
+  const box=document.querySelector('.abox');
+  const current=mode==='login'?reg:login;
+  const next=mode==='login'?login:reg;
   document.querySelectorAll('.atab').forEach((b,i)=>b.classList.toggle('on',(mode==='login'&&i===0)||(mode==='register'&&i===1)));
   showMsg('','');
+  if(current.style.display==='none'){
+    next.style.display='block';
+    next.classList.add('auth-form-enter');
+    setTimeout(()=>next.classList.remove('auth-form-enter'),350);
+    return;
+  }
+  // Animate height
+  const startH=box.offsetHeight;
+  current.classList.add('auth-form-exit');
+  setTimeout(()=>{
+    current.style.display='none';current.classList.remove('auth-form-exit');
+    next.style.display='block';
+    const endH=box.offsetHeight;
+    box.style.height=startH+'px';
+    box.style.overflow='hidden';
+    box.style.transition='none';
+    // Double rAF needed on mobile Safari to ensure paint before transition
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      box.style.transition='height .38s cubic-bezier(.22,.68,0,1.2)';
+      box.style.height=endH+'px';
+    }));
+    setTimeout(()=>{box.style.height='';box.style.overflow='';box.style.transition='';},420);
+    next.classList.add('auth-form-enter');
+    setTimeout(()=>next.classList.remove('auth-form-enter'),350);
+  },190);
 };
 window.doRegister=async()=>{
   const name=document.getElementById('rname').value.trim();
@@ -994,7 +1058,7 @@ function startListeners(){
     if(!_fl.req){const nn=window._req.filter(r=>!prev.find(p=>p._id===r._id));nn.forEach(r=>{if(notifSettings.newRequest)addNotif('🙏 Nová žádost o modlitbu',r.name+': '+r.text.slice(0,55),'requests');});}
     _fl.req=false;renderReqs();updateBadges();
   }));
-  unsubs.push(onSnapshot(query(collection(db,'checklist'),orderBy('ts','desc')),snap=>{window._chk=snap.docs.map(d=>({...d.data(),_id:d.id}));renderChk();}));
+  unsubs.push(onSnapshot(query(collection(db,'checklist'),orderBy('ts','desc')),snap=>{window._chk=snap.docs.map(d=>({...d.data(),_id:d.id}));renderChk();updateBadges();}));
   unsubs.push(onSnapshot(query(collection(db,'watch'),orderBy('ts','asc')),snap=>{window._watch=snap.docs.map(d=>({...d.data(),_id:d.id}));renderWatch();renderCalendar();renderDash();renderBanners();}));
   unsubs.push(onSnapshot(query(collection(db,'anon'),orderBy('ts','desc')),snap=>{window._anon=snap.docs.map(d=>({...d.data(),_id:d.id}));renderAnon();updateBadges();const el=document.getElementById('aAnon');if(el&&el.style.display!=='none')renderAdminAnon();}));
   unsubs.push(onSnapshot(query(collection(db,'diary'),orderBy('ts','desc')),snap=>{window._diary=snap.docs.map(d=>({...d.data(),_id:d.id}));renderDiary();updateBadges();}));
@@ -1014,6 +1078,9 @@ function updateBadges(){
   document.getElementById('s3').textContent=diary.length;
   const aq=reqs.filter(r=>!r.answered).length;
   const bq=document.getElementById('bReq');bq.textContent=aq;bq.style.display=aq?'inline':'none';
+  // Checklist badge – počet aktivních (nesplněných)
+  const chkCount=(window._chk||[]).filter(x=>!x.done).length;
+  const bc=document.getElementById('bChk');if(bc){bc.textContent=chkCount;bc.style.display=chkCount?'inline':'none';}
   // Anon badge – pro všechny přihlášené
   const anon=window._anon||[];
   const anonCount=anon.filter(r=>!r.archived).length;
@@ -1171,7 +1238,7 @@ function renderChk(){
     </div>`;
   }).join('');
 }
-window.toggleChk=async id=>{const item=(window._chk||[]).find(x=>x._id===id);if(!item)return;try{await updateDoc(doc(db,'checklist',id),{done:!item.done});if(!item.done)toast('✓ Sláva Bohu!');}catch(e){toast('Chyba: '+e.message);}};
+window.toggleChk=async id=>{const item=(window._chk||[]).find(x=>x._id===id);if(!item)return;try{await updateDoc(doc(db,'checklist',id),{done:!item.done});if(!item.done)toast('✓ Splněno!');}catch(e){toast('Chyba: '+e.message);}};
 window.toggleChkPray=async id=>{const item=(window._chk||[]).find(x=>x._id===id);if(!item)return;const prayed=(item.prayedBy||[]).includes(CU.username);try{await updateDoc(doc(db,'checklist',id),{prayedBy:prayed?arrayRemove(CU.username):arrayUnion(CU.username)});toast(prayed?'Modlitba odebrána':'🙏 Modlíš se!');}catch(e){toast('Chyba: '+e.message);}};
 window.delChk=async id=>{const item=(window._chk||[]).find(x=>x._id===id);if(!item)return;if(!isAdmin()&&item.createdBy!==CU.username){toast('Nemáš oprávnění.');return;}if(!confirm('Smazat?'))return;try{await deleteDoc(doc(db,'checklist',id));toast('Smazáno');}catch(e){toast('Chyba: '+e.message);}};
 
@@ -1230,7 +1297,7 @@ window.saveCalWatch=async iso=>{
   const topStr=document.getElementById('cpT')?.value.trim()||'';
   const topics=topStr.split(',').map(s=>s.trim()).filter(Boolean);
   const sd=new Date(iso);const ed=endVal?new Date(endVal):sd;
-  const dateLabel=sd.toLocaleDateString('cs-CZ',{day:'numeric',month:'numeric'})+(endVal&&endVal!==iso?' – '+ed.toLocaleDateString('cs-CZ',{day:'numeric',month:'numeric',year:'numeric'}):'. '+sd.getFullYear());
+  const dateLabel=(()=>{const day=sd.getDate();const mon=sd.getMonth()+1;const dayE=ed.getDate();const monE=ed.getMonth()+1;return endVal&&endVal!==iso?`${day}. ${mon}. – ${dayE}. ${monE}. ${ed.getFullYear()}`:`${day}. ${mon}. ${sd.getFullYear()}`;})();
   try{await addDoc(collection(db,'watch'),{person,date:dateLabel,startDate:iso,endDate:endVal||iso,topics,createdBy:CU.username,ts:serverTimestamp()});document.querySelector('.cal-popup')?.remove();calPopup=null;toast('⌚ Stráž přidána');}catch(e){toast('Chyba: '+e.message);}
 };
 function makeGCalUrl(w){
@@ -1589,7 +1656,7 @@ window.delUser=async un=>{if(!confirm('Smazat uživatele?'))return;try{await del
 const cr=cells=>cells.map(c=>'"'+String(c||'').replace(/"/g,'""')+'"').join(',');
 const dl=(name,rows)=>{const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(rows.join('\r\n'));a.download=name;a.click();};
 window.exportRequests=()=>{const r=[cr(['Jméno','Kategorie','Typ','Žádost','Čas','Modlitby','Vyslyšeno'])];(window._req||[]).forEach(x=>r.push(cr([x.name,x.cat,x.reqType||'jednorázová',x.text,fmtTs(x.ts),(x.prayedBy||[]).length,x.answered?'Ano':'Ne'])));dl('oxygen-zadosti.csv',r);toast('📥 Export stažen');};
-window.exportChecklist=()=>{const r=[cr(['Téma','Přidal/a','Čas','Stav'])];(window._chk||[]).forEach(x=>r.push(cr([x.text,x.author,fmtTs(x.ts),x.done?'Vyslyšeno':'Aktivní'])));dl('oxygen-seznam.csv',r);toast('📥 Export stažen');};
+window.exportChecklist=()=>{const r=[cr(['Téma','Přidal/a','Čas','Stav'])];(window._chk||[]).forEach(x=>r.push(cr([x.text,x.author,fmtTs(x.ts),x.done?'Splněno':'Aktivní'])));dl('oxygen-seznam.csv',r);toast('📥 Export stažen');};
 window.exportDiary=()=>{const r=[cr(['Autor','Čas','Zápis','Verš'])];(window._diary||[]).forEach(x=>r.push(cr([x.author,fmtTs(x.ts),x.text,x.scripture||''])));dl('oxygen-denik.csv',r);toast('📥 Export stažen');};
 window.exportWatch=()=>{const r=[cr(['Strážce','Datum','Témata'])];(window._watch||[]).forEach(x=>r.push(cr([x.person,x.date,(x.topics||[]).join('; ')])));dl('oxygen-straz.csv',r);toast('📥 Export stažen');};
 window.exportAnon=()=>{if(!canMgr()){toast('Nemáš oprávnění.');return;}const r=[cr(['Kategorie','Žádost','Čas','Modlitby'])];(window._anon||[]).forEach(x=>r.push(cr([x.cat,x.text,fmtTs(x.ts),(x.prayedBy||[]).length])));dl('oxygen-anonymni.csv',r);toast('📥 Export stažen');};

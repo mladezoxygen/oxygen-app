@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#1A0833">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Oxygen">
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237B2FBE'/><rect x='14' y='4' width='4' height='24' rx='2' fill='white'/><rect x='6' y='10' width='20' height='4' rx='2' fill='white'/></svg>">
@@ -280,7 +281,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .wc.wc-future{border-color:rgba(155,79,222,.3)}
 .wc-header{padding:14px 16px 10px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
 .wc-header-left{flex:1;min-width:0}
-.wc-status{font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.wc-status{font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;row-gap:4px}
 .wc-status.curr{color:var(--gold)}.wc-status.future{color:var(--purple-xl)}.wc-status.past{color:var(--muted)}
 .wc-status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .wc-status.curr .wc-status-dot{background:var(--gold);box-shadow:0 0 6px var(--gold);animation:pulse-gold 2s infinite}
@@ -305,55 +306,310 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .b-join.on{background:rgba(6,214,160,.2);border-color:var(--green)}
 .b-join:disabled{opacity:.4;cursor:not-allowed}
 .wc-join-note{font-size:.73rem;color:var(--muted);font-style:italic}
+/* Watch card status badges */
+.wc-badge{display:inline-flex;align-items:center;font-size:.67rem;font-weight:800;padding:2px 7px;border-radius:20px;letter-spacing:.02em;margin-left:6px;vertical-align:middle;white-space:nowrap}
+.wc-badge-leader{background:rgba(255,209,102,.18);color:var(--gold);border:1px solid rgba(255,209,102,.3)}
+.wc-badge-join{background:rgba(6,214,160,.12);color:var(--green);border:1px solid rgba(6,214,160,.25)}
 /* DIARY */
 .de{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:17px;margin-bottom:10px;animation:fu .3s ease}
 .da{font-weight:800;color:var(--purple-xl);font-size:.85rem}.dd{color:var(--muted);font-size:.7rem}
 .dt{color:var(--text);line-height:1.68;font-size:.88rem;margin-top:8px}
 .ds{margin-top:9px;padding:8px 12px;background:rgba(255,209,102,.07);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;color:var(--gold);font-style:italic;font-size:.83rem}
-/* CHAT */
-.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 248px);min-height:340px}
-#sec-chat{padding-bottom:0!important;overflow:hidden}
-#sec-chat .ph{margin-bottom:12px}
-.chat-msgs{flex:1;overflow-y:auto;padding:8px 0;display:flex;flex-direction:column;gap:6px;scroll-behavior:smooth}
-.chat-msg{display:flex;gap:9px;animation:fu .2s ease;position:relative}
-.chat-msg.mine{flex-direction:row-reverse}
-.chat-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--purple-d));display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;color:var(--white);flex-shrink:0;margin-top:2px}
-.chat-av.ea{background:var(--surface);font-size:1rem}
-.chat-bubble-wrap{max-width:70%}
-.chat-name{font-size:.72rem;font-weight:800;color:var(--purple-xl);margin-bottom:3px}
-.chat-msg.mine .chat-name{text-align:right}
-.chat-bubble{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:9px 13px;position:relative}
-.chat-msg.mine .chat-bubble{background:rgba(123,47,190,.3);border-color:var(--border-l)}
-.chat-text{font-size:.88rem;color:var(--text);line-height:1.5;word-break:break-word}
-.chat-footer{display:flex;justify-content:space-between;align-items:center;margin-top:4px;gap:8px}
-.chat-time{font-size:.66rem;color:var(--muted)}
-.chat-actions{display:flex;gap:4px;opacity:0;transition:opacity .2s}
-.chat-msg:hover .chat-actions{opacity:1}
-.chat-act-btn{background:none;border:none;cursor:pointer;font-size:.78rem;color:var(--muted);padding:2px 4px;border-radius:5px;transition:all .15s;font-family:'Nunito',sans-serif}
-.chat-act-btn:hover{background:rgba(123,47,190,.2);color:var(--purple-xl)}
-/* REACTIONS */
-.reactions{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px}
-.reaction{background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:20px;padding:2px 8px;font-size:.78rem;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:3px}
-.reaction:hover,.reaction.mine{background:rgba(123,47,190,.2);border-color:var(--border-l)}
-.reaction-count{font-size:.72rem;color:var(--muted);font-weight:700}
-/* REPLY PREVIEW */
-.reply-preview{background:rgba(123,47,190,.1);border-left:3px solid var(--purple-l);border-radius:0 8px 8px 0;padding:6px 10px;margin-bottom:6px;font-size:.78rem;color:var(--muted);position:relative}
-.reply-preview strong{color:var(--purple-xl);display:block;margin-bottom:2px}
-.reply-cancel{position:absolute;top:4px;right:6px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:.9rem}
-/* CHAT INPUT */
-.chat-input-area{border-top:1px solid var(--border);padding-top:10px;margin-top:8px}
-.emoji-bar{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px;scroll-behavior:smooth}
-.emoji-btn{background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:7px;padding:4px 7px;cursor:pointer;font-size:.95rem;transition:background .15s;line-height:1}
-.emoji-btn:hover{background:rgba(123,47,190,.2)}
-.chat-input-row{display:flex;gap:8px;align-items:flex-end}
-.chat-input{flex:1;padding:10px 14px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:11px;color:var(--text);font-family:'Nunito',sans-serif;font-size:.9rem;outline:none;resize:none;min-height:42px;max-height:110px;transition:border-color .2s}
-.chat-input:focus{border-color:var(--purple-l)}.chat-input::placeholder{color:var(--muted)}
-.chat-send{padding:10px 16px;background:var(--purple);border:none;border-radius:10px;color:var(--white);font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:800;cursor:pointer;transition:opacity .2s;box-shadow:0 3px 12px rgba(123,47,190,.4)}
-.chat-send:hover{opacity:.88}
-/* REACTION PICKER */
-.react-picker{position:fixed;background:var(--surface);border:1px solid var(--border-l);border-radius:12px;padding:10px;display:flex;gap:6px;box-shadow:0 8px 30px rgba(0,0,0,.5);z-index:400;animation:fu .15s ease}
-.react-emoji{font-size:1.3rem;cursor:pointer;padding:4px;border-radius:7px;transition:background .15s}
-.react-emoji:hover{background:rgba(123,47,190,.2)}
+/* CHAT — Discord-style */
+
+.chat-root{display:flex;height:calc(100vh - 56px);overflow:hidden;border-radius:14px;border:1px solid var(--border);background:var(--card-bg)}
+/* ── Channel sidebar ── */
+.ch-sidebar{width:240px;flex-shrink:0;display:flex;flex-direction:column;background:var(--bg-dark);border-right:1px solid var(--border);overflow:hidden}
+.ch-sidebar-header{padding:16px 16px 12px;border-bottom:1px solid var(--border);flex-shrink:0}
+.ch-sidebar-title{display:block;font-family:'Cinzel',serif;font-size:.9rem;color:var(--white);font-weight:700}
+.ch-sidebar-sub{display:block;font-size:.68rem;color:var(--muted);margin-top:1px}
+.ch-sidebar-body{flex:1;overflow-y:auto;padding:8px 0}
+.ch-sidebar-body::-webkit-scrollbar{width:3px}
+.ch-sidebar-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+/* Category */
+.ch-category{padding:14px 12px 4px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.ch-category-name{font-size:.67rem;font-weight:800;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:5px;transition:color .15s}
+.ch-category:hover .ch-category-name{color:var(--text)}
+.ch-category-arrow{font-size:.6rem;color:var(--muted);transition:transform .2s}
+.ch-category.collapsed .ch-category-arrow{transform:rotate(-90deg)}
+.ch-category-add{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.95rem;padding:0;line-height:1;transition:color .15s;opacity:0}
+.ch-category:hover .ch-category-add{opacity:1}
+.ch-category-add:hover{color:var(--purple-xl)}
+/* Channel item */
+.ch-item{display:flex;align-items:center;gap:7px;padding:5px 12px;margin:1px 6px;border-radius:6px;cursor:pointer;color:var(--muted);font-size:.88rem;font-weight:500;transition:all .12s;position:relative;user-select:none}
+.ch-item:hover{background:rgba(255,255,255,.06);color:var(--text)}
+.ch-item.active{background:rgba(123,47,190,.25);color:var(--white);font-weight:700}
+.ch-item-hash{font-size:.85rem;flex-shrink:0;opacity:.7}
+.ch-item.active .ch-item-hash{opacity:1}
+.ch-item-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ch-item-badge{background:var(--red);color:#fff;border-radius:10px;padding:1px 6px;font-size:.62rem;font-weight:800;flex-shrink:0}
+.ch-item-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.72rem;opacity:0;transition:opacity .12s,color .12s;padding:2px 4px;border-radius:4px;flex-shrink:0}
+.ch-item:hover .ch-item-del{opacity:1}
+.ch-item-del:hover{color:var(--red)}
+/* ── Main chat ── */
+.ch-main{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.ch-header{display:flex;align-items:center;gap:8px;padding:0 16px;height:48px;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--bg-dark)}
+.ch-header-hash{font-size:1.1rem;color:var(--muted);flex-shrink:0}
+.ch-header-name{font-weight:800;font-size:.92rem;color:var(--white);white-space:nowrap}
+.ch-header-sep{color:var(--border-l)}
+.ch-header-desc{font-size:.78rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ch-header-right{display:flex;gap:8px;align-items:center;flex-shrink:0;margin-left:auto}
+/* Pinned */
+.chat-pinned{background:rgba(255,209,102,.06);border-bottom:1px solid rgba(255,209,102,.15);padding:8px 16px;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.chat-pinned-icon{font-size:.85rem;color:var(--gold);flex-shrink:0}
+.chat-pinned-content{flex:1;min-width:0;cursor:pointer}
+.chat-pinned-label{font-size:.65rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1px}
+.chat-pinned-msg{font-size:.8rem;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chat-pinned-unpin{background:rgba(239,71,111,.1);border:1px solid rgba(239,71,111,.25);border-radius:6px;color:var(--red);cursor:pointer;font-size:.72rem;padding:3px 8px;font-family:'Nunito',sans-serif;white-space:nowrap;transition:all .15s;flex-shrink:0}
+.chat-pinned-unpin:hover{background:rgba(239,71,111,.2)}
+/* Messages */
+.chat-msgs{flex:1;overflow-y:auto;padding:8px 0;display:flex;flex-direction:column;scroll-behavior:smooth;transition:opacity .15s ease}
+.chat-msgs.fading{opacity:0}
+.chat-msgs::-webkit-scrollbar{width:3px}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+/* Date separator */
+.chat-date-sep{display:flex;align-items:center;gap:10px;padding:14px 16px 6px;user-select:none}
+.chat-date-sep::before,.chat-date-sep::after{content:'';flex:1;height:1px;background:var(--border)}
+.chat-date-sep span{font-size:.67rem;color:var(--muted);font-weight:700;letter-spacing:.04em;padding:2px 10px;background:var(--bg-dark);border-radius:20px;white-space:nowrap}
+/* Unread separator */
+.chat-unread-sep{display:flex;align-items:center;gap:10px;padding:8px 16px}
+.chat-unread-sep::before,.chat-unread-sep::after{content:'';flex:1;height:1px;background:rgba(6,214,160,.25)}
+.chat-unread-sep span{font-size:.67rem;color:var(--green);font-weight:700;padding:2px 10px;background:rgba(6,214,160,.08);border-radius:20px;white-space:nowrap;border:1px solid rgba(6,214,160,.2)}
+/* Message group */
+.chat-msg-group{display:flex;align-items:flex-start;gap:12px;padding:2px 16px;animation:msg-in .2s ease}
+.chat-msg-group.mine{animation:msg-in-mine .2s ease}
+@keyframes msg-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes msg-in-mine{from{opacity:0;transform:translateY(8px) translateX(8px)}to{opacity:1;transform:translateY(0)}}
+.chat-msg-group.mine{flex-direction:row-reverse;animation:msg-in-mine .2s ease}
+@keyframes reply-in{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.reply-preview{animation:reply-in .2s cubic-bezier(.22,.68,0,1.2)}
+.chat-msg-group:hover .chat-bubble{box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.reaction:active{transform:scale(.88)}
+.chat-msg-group.grouped{padding-top:1px}
+.chat-msg-group:hover{background:rgba(255,255,255,.02)}
+/* Avatar */
+.chat-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--purple-d));display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;color:#fff;flex-shrink:0;cursor:pointer;transition:opacity .15s;margin-top:2px}
+.chat-av:hover{opacity:.75}
+.chat-av.ea{background:var(--surface);font-size:1.1rem}
+.chat-av.hidden{visibility:hidden;pointer-events:none}
+/* Bubble wrap */
+.chat-bubble-wrap{display:flex;flex-direction:column;max-width:min(70%,560px);gap:2px;flex:1;min-width:0}
+.chat-msg-group.mine .chat-bubble-wrap{align-items:flex-end}
+/* Meta */
+.chat-meta{display:flex;align-items:baseline;gap:7px;margin-bottom:3px;padding:0 2px}
+.chat-msg-group.mine .chat-meta{flex-direction:row-reverse}
+.chat-name{font-size:.8rem;font-weight:800;color:var(--purple-xl);cursor:pointer;transition:opacity .15s}
+.chat-name:hover{opacity:.7}
+.chat-meta-time{font-size:.65rem;color:var(--muted)}
+/* Bubble */
+.chat-bubble{background:var(--surface);border:1px solid var(--border);border-radius:4px 16px 16px 16px;padding:10px 14px;word-break:break-word;transition:background .12s}
+.chat-msg-group.mine .chat-bubble{background:var(--purple);border-color:transparent;border-radius:16px 4px 16px 16px}
+.chat-msg-group.grouped:not(.mine) .chat-bubble{border-radius:4px 16px 16px 16px}
+.chat-msg-group.grouped.mine .chat-bubble{border-radius:16px 4px 16px 16px}
+.chat-text{font-size:.9rem;line-height:1.55;color:var(--text);white-space:pre-wrap}
+.chat-msg-group.mine .chat-text{color:#fff}
+.chat-time-inline{font-size:.62rem;color:var(--muted);text-align:right;margin-top:3px}
+.chat-msg-group.mine .chat-time-inline{color:rgba(255,255,255,.45)}
+/* Reply quote */
+.chat-reply-quote{background:rgba(0,0,0,.15);border-left:3px solid rgba(255,255,255,.35);border-radius:0 8px 8px 0;padding:5px 10px;margin-bottom:7px;font-size:.78rem;color:rgba(255,255,255,.6);cursor:pointer;transition:background .12s}
+.chat-msg-group:not(.mine) .chat-reply-quote{background:rgba(123,47,190,.1);border-left-color:var(--purple-l);color:var(--muted)}
+.chat-reply-quote strong{display:block;font-size:.7rem;margin-bottom:1px;color:rgba(255,255,255,.9)}
+.chat-msg-group:not(.mine) .chat-reply-quote strong{color:var(--purple-xl)}
+/* Actions */
+.chat-actions-wrap{display:flex;align-items:center;gap:2px;opacity:0;transition:opacity .12s;flex-shrink:0;padding-top:6px}
+.chat-msg-group:hover .chat-actions-wrap{opacity:1}
+.chat-act-btn{background:var(--bg-dark);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:.82rem;color:var(--muted);padding:4px 8px;transition:all .12s;font-family:'Nunito',sans-serif;line-height:1}
+.chat-act-btn:hover{background:rgba(123,47,190,.15);border-color:var(--border-l);color:var(--purple-xl)}
+.chat-act-btn.del:hover{color:var(--red);border-color:rgba(239,71,111,.3)}
+/* Reactions */
+.chat-reactions{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
+.chat-msg-group.mine .chat-reactions{justify-content:flex-end}
+.reaction{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:3px 9px;font-size:.82rem;cursor:pointer;transition:all .12s;display:flex;align-items:center;gap:4px;user-select:none;position:relative}
+.reaction:hover{border-color:var(--border-l);background:rgba(123,47,190,.1)}
+.reaction.mine{background:rgba(123,47,190,.2);border-color:var(--purple-l)}
+.reaction-count{font-size:.74rem;font-weight:700;color:var(--muted)}
+.reaction.mine .reaction-count{color:var(--purple-xl)}
+.reaction-tooltip{position:absolute;bottom:calc(100%+5px);left:50%;transform:translateX(-50%);background:var(--bg);border:1px solid var(--border-l);border-radius:8px;padding:5px 10px;font-size:.72rem;color:var(--text);white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;z-index:300;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+.reaction:hover .reaction-tooltip{opacity:1}
+/* Shared prayer */
+.chat-prayer-share{background:rgba(123,47,190,.1);border:1px solid var(--border-l);border-radius:8px;padding:8px 12px;margin-top:7px;cursor:pointer;transition:background .12s}
+.chat-prayer-share:hover{background:rgba(123,47,190,.18)}
+.chat-prayer-share-label{font-size:.67rem;color:var(--purple-xl);font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.chat-prayer-share-text{font-size:.82rem;color:var(--text);line-height:1.4}
+/* Typing */
+.chat-typing{font-size:.74rem;color:var(--muted);padding:4px 16px;min-height:20px;font-style:italic;flex-shrink:0}
+/* Reply bar */
+.reply-preview{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--purple-l);border-radius:0 8px 8px 0;padding:7px 36px 7px 12px;margin-bottom:8px;font-size:.8rem;color:var(--muted);position:relative;animation:fu .15s ease}
+.reply-preview strong{color:var(--purple-xl);display:block;font-size:.74rem;margin-bottom:2px}
+.reply-cancel{position:absolute;top:50%;right:10px;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;line-height:1}
+.reply-cancel:hover{color:var(--red)}
+/* Input area */
+.ch-input-area{border-top:1px solid var(--border);padding:12px 14px;flex-shrink:0}
+.ch-input-row{display:flex;gap:8px;align-items:flex-end}
+.ch-emoji-btn{background:none;border:none;cursor:pointer;font-size:1.15rem;padding:8px;border-radius:10px;transition:background .12s,transform .1s;line-height:1;flex-shrink:0;color:var(--muted)}
+.ch-emoji-btn:hover{background:rgba(123,47,190,.15);transform:scale(1.1);color:var(--purple-xl)}
+.chat-input{flex:1;padding:11px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:12px;color:var(--text);font-family:'Nunito',sans-serif;font-size:.9rem;outline:none;resize:none;min-height:44px;max-height:120px;transition:border-color .2s,box-shadow .2s;line-height:1.5}
+.chat-input:focus{border-color:var(--purple-l);box-shadow:0 0 0 3px rgba(123,47,190,.1)}
+.chat-input::placeholder{color:var(--muted)}
+.chat-send{width:44px;height:44px;background:var(--purple);border:none;border-radius:12px;color:#fff;cursor:pointer;transition:opacity .15s,transform .12s,box-shadow .15s;box-shadow:0 3px 14px rgba(123,47,190,.35);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.chat-send:hover{opacity:.88;transform:scale(1.05)}
+.chat-send:active{transform:scale(.92)}
+@keyframes send-pulse{0%{box-shadow:0 3px 14px rgba(123,47,190,.35)}50%{box-shadow:0 3px 24px rgba(123,47,190,.7)}100%{box-shadow:0 3px 14px rgba(123,47,190,.35)}}
+.chat-send.sending{animation:send-pulse .3s ease}
+.chat-emoji-btn{background:none;border:1px solid var(--border);border-radius:12px;cursor:pointer;font-size:1.15rem;padding:0 11px;height:44px;flex-shrink:0;transition:background .12s;color:var(--muted);line-height:1}
+.chat-emoji-btn:hover{background:rgba(123,47,190,.15);border-color:var(--border-l)}
+/* Reaction picker */
+.react-picker{position:fixed;background:var(--surface);border:1px solid var(--border-l);border-radius:14px;padding:8px 10px;display:flex;gap:4px;box-shadow:0 8px 32px rgba(0,0,0,.55);z-index:500;animation:fu .12s ease}
+.react-emoji{font-size:1.35rem;cursor:pointer;padding:5px;border-radius:9px;transition:background .1s,transform .1s;line-height:1}
+.react-emoji:hover{background:rgba(123,47,190,.2);transform:scale(1.18)}
+/* Mobile */
+
+/* CHANNELS — Discord-style layout */
+/* Outer layout: chat area left, channel sidebar right */
+.chat-layout-outer{display:flex;height:calc(100vh - 170px);min-height:420px;border-radius:14px;overflow:hidden;background:var(--bg-dark)}
+
+#sec-chat .ph{display:none}
+/* Channel sidebar */
+.ch-sidebar{width:240px;flex-shrink:0;display:flex;flex-direction:column;border-left:1px solid var(--border);background:var(--bg-dark2);overflow:hidden}
+.ch-sidebar-header{padding:14px 16px 10px;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
+.ch-sidebar-add{background:rgba(123,47,190,.15);border:1px solid var(--border);border-radius:7px;color:var(--purple-xl);cursor:pointer;width:26px;height:26px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.ch-sidebar-add:hover{background:rgba(123,47,190,.3);border-color:var(--border-l)}
+.ch-sidebar-title{font-family:'Cinzel',serif;font-size:.82rem;color:var(--white);letter-spacing:.04em}
+.ch-sidebar-body{flex:1;overflow-y:auto;padding:8px 0}
+.ch-sidebar-body::-webkit-scrollbar{width:3px}
+.ch-sidebar-body::-webkit-scrollbar-thumb{background:var(--border)}
+.ch-sidebar-footer{padding:10px 12px;border-top:1px solid var(--border);flex-shrink:0}
+/* Category */
+.ch-category{padding:14px 12px 4px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.ch-category-name{font-size:.68rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;display:flex;align-items:center;gap:5px;transition:color .15s}
+.ch-category:hover .ch-category-name{color:var(--text)}
+.ch-category-arrow{font-size:.6rem;color:var(--muted);transition:transform .2s}
+.ch-category.collapsed .ch-category-arrow{transform:rotate(-90deg)}
+.ch-category-add{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.95rem;line-height:1;padding:2px 4px;border-radius:4px;transition:all .15s}
+.ch-category-add:hover{background:rgba(123,47,190,.2);color:var(--purple-xl)}
+/* Channel items */
+.ch-items{overflow:hidden;transition:max-height .2s ease}
+.ch-item{display:flex;align-items:center;gap:6px;padding:5px 10px 5px 14px;margin:1px 6px;border-radius:7px;cursor:pointer;font-size:.87rem;font-weight:600;color:var(--muted);transition:background .12s,color .12s,transform .1s;user-select:none;position:relative}
+.ch-item:active{transform:scale(.97)}
+.ch-item:hover{background:rgba(123,47,190,.12);color:var(--text)}
+.ch-item.active{background:rgba(123,47,190,.25);color:var(--white)}
+.ch-item-hash{font-size:.88rem;flex-shrink:0;opacity:.55}
+.ch-item.active .ch-item-hash{opacity:.9}
+.ch-item-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ch-item-badge{background:var(--red);color:#fff;border-radius:10px;padding:1px 6px;font-size:.62rem;font-weight:800;flex-shrink:0}
+.ch-item-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.72rem;padding:2px 5px;border-radius:4px;opacity:0;transition:all .12s;margin-left:auto;flex-shrink:0}
+.ch-item:hover .ch-item-del{opacity:.7}
+.ch-item-del:hover{opacity:1!important;color:var(--red)}
+/* Main area */
+.ch-main{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.ch-topbar{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-shrink:0;background:rgba(0,0,0,.15)}
+.ch-hash{font-size:1.15rem;color:var(--muted);flex-shrink:0;line-height:1}
+.ch-topbar-name{font-weight:800;font-size:.93rem;color:var(--white)}
+.ch-topbar-desc{font-size:.74rem;color:var(--muted);margin-left:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ch-topbar-right{margin-left:auto;display:flex;gap:6px;align-items:center;flex-shrink:0}
+/* Pinned */
+.chat-pinned{background:rgba(255,209,102,.06);border-bottom:1px solid rgba(255,209,102,.15);padding:8px 16px;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.chat-pinned-icon{font-size:.85rem;color:var(--gold);flex-shrink:0}
+.chat-pinned-content{flex:1;min-width:0;cursor:pointer}
+.chat-pinned-label{font-size:.64rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1px}
+.chat-pinned-msg{font-size:.8rem;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chat-pinned-content:hover .chat-pinned-msg{text-decoration:underline}
+.chat-pinned-unpin{background:rgba(239,71,111,.08);border:1px solid rgba(239,71,111,.2);border-radius:6px;color:var(--red);cursor:pointer;font-size:.72rem;padding:3px 9px;font-family:'Nunito',sans-serif;white-space:nowrap;transition:all .15s;flex-shrink:0}
+.chat-pinned-unpin:hover{background:rgba(239,71,111,.2)}
+/* Input area */
+.ch-input-area{border-top:1px solid var(--border);padding:10px 14px;flex-shrink:0}
+.ch-input-row{display:flex;gap:8px;align-items:flex-end}
+.ch-emoji-btn{background:none;border:1px solid var(--border);border-radius:10px;color:var(--muted);cursor:pointer;font-size:1.1rem;width:44px;height:44px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.ch-emoji-btn:hover{background:rgba(123,47,190,.15);border-color:var(--border-l);color:var(--purple-xl)}
+/* Member panel & topbar buttons */
+.ch-members-btn{background:none;border:1px solid var(--border);border-radius:8px;color:var(--muted);cursor:pointer;font-size:.78rem;padding:4px 10px;font-family:'Nunito',sans-serif;font-weight:700;transition:all .15s;display:flex;align-items:center;gap:5px;white-space:nowrap;line-height:1}
+.ch-members-btn:hover{background:rgba(123,47,190,.15);border-color:var(--border-l);color:var(--text)}
+.ch-members-btn.active{background:rgba(123,47,190,.2);border-color:var(--purple-l);color:var(--purple-xl)}
+.ch-edit-btn{background:none;border:1px solid var(--border);border-radius:8px;color:var(--muted);cursor:pointer;font-size:.85rem;padding:4px 9px;transition:all .15s;line-height:1}
+.ch-channels-toggle{display:none}
+.ch-edit-btn:hover{background:rgba(123,47,190,.15);border-color:var(--border-l);color:var(--purple-xl)}
+.ch-members-panel{width:0;flex-shrink:0;border-left:0px solid var(--border);background:var(--bg-dark);display:flex;flex-direction:column;overflow:hidden;transition:width .25s ease,border-width .25s ease}
+.ch-members-panel.open{width:200px;border-left-width:1px}
+.ch-members-panel-header{padding:12px 14px 8px;font-size:.68rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--border);flex-shrink:0;white-space:nowrap}
+.ch-member-row{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;transition:background .1s}
+.ch-member-row:hover{background:rgba(123,47,190,.1)}
+.ch-member-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--purple-d));display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800;color:#fff;flex-shrink:0;position:relative}
+.ch-member-av.ea{background:var(--surface);font-size:.9rem}
+.ch-member-online::after{content:'';position:absolute;bottom:-1px;right:-1px;width:8px;height:8px;border-radius:50%;background:#23d18b;border:2px solid var(--bg-dark)}
+.ch-member-name{font-size:.82rem;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.ch-member-status{font-size:.67rem;color:var(--muted)}
+.ch-members-group-label{padding:8px 14px 2px;font-size:.64rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+@media(max-width:900px){.ch-sidebar{width:190px}}
+@media(max-width:700px){
+  .chat-layout-outer{height:calc(100dvh - 80px);min-height:0;position:relative}
+
+  /* ── Channel sidebar as slide-in overlay ── */
+  .ch-sidebar{
+    position:absolute;top:0;left:0;bottom:0;z-index:50;
+    width:240px!important;min-width:240px!important;max-width:240px!important;
+    transform:translateX(-100%);
+    transition:transform .25s cubic-bezier(.22,.68,0,1.2);
+    box-shadow:4px 0 24px rgba(0,0,0,.5);
+  }
+  .ch-sidebar.mob-open{transform:translateX(0)}
+  .ch-sidebar-title{display:block!important}
+  .ch-item-name{display:block!important}
+  .ch-category-name{display:flex!important}
+  .ch-item-del{display:none}
+  .ch-sidebar-header{padding:14px 16px 10px;flex-direction:row;justify-content:space-between}
+  .ch-sidebar-body{padding:8px 0}
+  .ch-item{padding:5px 10px 5px 14px;margin:1px 6px;border-radius:7px;justify-content:flex-start}
+  .ch-item-hash{font-size:.88rem;opacity:.55}
+  .ch-item.active .ch-item-hash{opacity:.9}
+  .ch-category{padding:14px 12px 4px;justify-content:space-between}
+  .ch-category-add{display:none}
+  .ch-category-arrow{display:block!important}
+
+  /* Overlay backdrop for sidebar */
+  .ch-sidebar-backdrop{
+    display:none;position:absolute;inset:0;z-index:49;
+    background:rgba(0,0,0,.5);
+  }
+  .ch-sidebar-backdrop.visible{display:block}
+
+  /* ── Main area fills full width ── */
+  .ch-main{width:100%;flex:1;position:relative}
+
+  /* ── Topbar – show channel toggle + members btn ── */
+  .ch-topbar{padding:8px 12px;gap:6px}
+  .ch-topbar-name{font-size:.88rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .ch-topbar-right{display:flex!important;gap:5px;align-items:center;flex-shrink:0}
+  .ch-topbar-desc{display:none!important}
+
+  /* Channel toggle button (hamburger) inside chat topbar */
+  .ch-channels-toggle{
+    display:flex!important;
+    background:none;border:1px solid var(--border);border-radius:8px;
+    color:var(--muted);cursor:pointer;font-size:.88rem;
+    padding:4px 8px;align-items:center;gap:4px;
+    font-family:'Nunito',sans-serif;font-weight:700;line-height:1;
+    transition:all .15s;white-space:nowrap;flex-shrink:0;
+  }
+  .ch-channels-toggle:hover{background:rgba(123,47,190,.15);border-color:var(--border-l);color:var(--purple-xl)}
+  .ch-channels-toggle.active{background:rgba(123,47,190,.2);border-color:var(--purple-l);color:var(--purple-xl)}
+
+  /* Members button stays visible */
+  .ch-members-btn{display:flex!important;padding:4px 8px;font-size:.72rem}
+
+  /* ── Members panel as slide-in overlay from right ── */
+  .ch-members-panel{
+    display:flex!important;
+    position:absolute;top:0;right:0;bottom:0;z-index:50;
+    width:200px!important;border-left-width:1px!important;
+    transform:translateX(100%);
+    transition:transform .25s cubic-bezier(.22,.68,0,1.2);
+    box-shadow:-4px 0 24px rgba(0,0,0,.5);
+  }
+  .ch-members-panel.open{transform:translateX(0)!important;width:200px!important}
+
+  /* Input na mobilu */
+  .ch-input-area{padding:8px 10px}
+}
 /* STATS */
 .chart-wrap{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:19px;margin-bottom:14px}
 .chart-title{font-family:'Cinzel',serif;font-size:.88rem;color:var(--purple-xl);margin-bottom:13px}
@@ -462,10 +718,17 @@ input:checked+.slider::before{transform:translateX(18px)}
   .tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;width:100%}
   .tabs::-webkit-scrollbar{display:none}
   /* Calendar */
-  .cal-day{min-height:30px}
-  .cal-day-num{font-size:.68rem}
-  .cal-day-person{font-size:.56rem}
+  .cal-wrap{padding:12px 10px}
+  .cal-grid{gap:2px}
+  .cal-day{min-height:34px;padding:3px 2px;border-radius:6px}
+  .cal-day-num{font-size:.66rem;line-height:1}
+  .cal-day.cal-today .cal-day-num{width:16px;height:16px;font-size:.6rem}
+  .cal-day-name{font-size:.6rem;padding:2px 0}
+  .cal-chip{font-size:.52rem;padding:1px 3px;border-radius:2px}
+  .cal-chips{gap:1px}
   .cal-popup{left:8px!important;right:8px!important;width:auto!important}
+  .cal-title{font-size:.82rem}
+  .cal-nav{padding:3px 8px;font-size:.74rem}
   /* Forms */
   .irow{flex-direction:column}
   .irow .fg{min-width:0;width:100%}
@@ -480,15 +743,19 @@ input:checked+.slider::before{transform:translateX(18px)}
   .modal{padding:18px}
   /* Buttons */
   .bs{padding:5px 9px;font-size:.72rem}
-  /* Chat */
-  .chat-wrap{height:calc(100dvh - 190px)}
-  #sec-chat .ph{margin-bottom:8px}
-  .chat-bubble-wrap{max-width:85%}
-  .chat-actions{opacity:1!important}
-  .chat-act-btn{font-size:.85rem;padding:3px 6px}
-  .emoji-bar{gap:3px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px}
-  .emoji-bar::-webkit-scrollbar{display:none}
-  .emoji-btn{padding:3px 5px;font-size:.9rem;flex-shrink:0}
+  /* ── CHAT MOBILE – viz dedicated block below ── */
+  #sec-chat{padding:0!important;margin:0!important}
+  .chat-msgs{flex:1;padding:8px 4px 4px;min-height:0}
+  .chat-bubble-wrap{max-width:78%}
+  .chat-msg-group{padding:1px 4px}
+  .chat-actions-wrap{opacity:1!important}
+  .chat-act-btn{font-size:.78rem;padding:3px 5px}
+  .chat-typing{padding:3px 10px;font-size:.72rem}
+  .ch-input-area{padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:var(--bg-dark2);border-top:1px solid var(--border);flex-shrink:0}
+  .ch-input-row{gap:6px;align-items:flex-end}
+  .chat-input{font-size:.9rem;padding:9px 13px;min-height:40px;max-height:100px;border-radius:20px;background:var(--surface);line-height:1.4}
+  .chat-send{width:40px;height:40px;border-radius:50%;flex-shrink:0}
+  .ch-emoji-btn{width:36px;height:40px;font-size:1.1rem;flex-shrink:0;border-radius:10px;border:none;background:none}
   .week-stat-grid{grid-template-columns:1fr 1fr!important}
   .b-gcal{font-size:.68rem;padding:4px 8px}
 }
@@ -568,6 +835,22 @@ input:checked+.slider::before{transform:translateX(18px)}
 
 @media(max-width:700px){.pstat-grid{grid-template-columns:1fr 1fr}}
 
+
+/* ── CUSTOM CHECKBOX (channel member picker) ── */
+.ch-member-check-wrap{display:flex;align-items:center;gap:10px;padding:7px 8px;cursor:pointer;border-radius:8px;transition:background .12s;user-select:none}
+.ch-member-check-wrap:hover{background:rgba(123,47,190,.12)}
+.ch-member-check-wrap input[type=checkbox]{display:none}
+.ch-cb{width:18px;height:18px;border-radius:5px;border:2px solid var(--border-l);background:rgba(255,255,255,.04);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .18s,border-color .18s,transform .15s;position:relative}
+.ch-member-check-wrap input:checked~.ch-cb{background:var(--purple);border-color:var(--purple-l);transform:scale(1.08)}
+.ch-member-check-wrap input:checked~.ch-cb::after{content:'';display:block;width:5px;height:9px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px);animation:cb-check .15s ease forwards}
+@keyframes cb-check{from{opacity:0;transform:rotate(45deg) translate(-1px,-1px) scale(.5)}to{opacity:1;transform:rotate(45deg) translate(-1px,-1px) scale(1)}}
+.ch-member-check-wrap:hover .ch-cb{border-color:var(--purple-l)}
+.ch-member-check-wrap.locked{cursor:default;opacity:.75}
+.ch-member-check-wrap.locked:hover{background:transparent}
+.ch-member-check-wrap.locked:hover .ch-cb{border-color:var(--border-l)}
+.ch-cb-locked{background:rgba(123,47,190,.25)!important;border-color:var(--purple-l)!important;opacity:.7}
+.ch-cb-locked::after{content:'';display:block;width:5px;height:9px;border:2px solid rgba(255,255,255,.6);border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px)}
+.ch-member-role{font-size:.65rem;font-weight:700;padding:1px 6px;border-radius:20px;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -819,19 +1102,67 @@ input:checked+.slider::before{transform:translateX(18px)}
 
     <!-- CHAT -->
     <div class="sec" id="sec-chat">
-      <div class="ph"><h1>Týmový chat</h1><p>Hromadná komunikace celého týmu · najeď na zprávu pro akce</p></div>
-      <div class="card card-top chat-wrap">
-        <div class="chat-msgs" id="chatMsgs"><div class="loading"><div class="spin"></div>Načítám…</div></div>
-        <div class="chat-input-area">
-          <div id="replyBar" style="display:none"></div>
-          <div class="emoji-bar" id="emojiBar"></div>
-          <div class="chat-input-row">
-            <textarea class="chat-input" id="chatInput" placeholder="Napiš zprávu… (Enter = odeslat, Shift+Enter = nový řádek)" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"></textarea>
-            <button class="chat-send" onclick="sendChat()">→</button>
+      <div class="chat-layout-outer">
+        <!-- Backdrop for mobile sidebar/members -->
+        <div class="ch-sidebar-backdrop" id="chSidebarBackdrop" onclick="closeChatOverlays()"></div>
+        <!-- Channel sidebar -->
+        <div class="ch-sidebar" id="channelSidebar">
+          <div class="ch-sidebar-header">
+            <span class="ch-sidebar-title">💬 Kanály</span>
+            <div class="admin-only" id="sidebarAdminBtns" style="display:none;display:flex;gap:4px">
+              <button class="ch-sidebar-add" onclick="showManageCatsModal()" title="Spravovat kategorie" style="font-size:.75rem;width:auto;padding:0 8px;border-radius:6px">⚙</button>
+              <button class="ch-sidebar-add" id="addChannelBtn" onclick="showAddChannelModal()" title="Nový kanál">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="ch-sidebar-body" id="channelList"></div>
+        </div>
+        <!-- Main chat area -->
+        <div class="ch-main">
+          <div class="ch-topbar">
+            <button class="ch-channels-toggle" id="chChannelsToggle" onclick="toggleMobChannels()" title="Textové kanály">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="9" y1="10" x2="9.01" y2="10" stroke-width="3"/><line x1="12" y1="10" x2="12.01" y2="10" stroke-width="3"/><line x1="15" y1="10" x2="15.01" y2="10" stroke-width="3"/></svg>
+              <span id="chChannelsLabel">Kanály</span>
+            </button>
+            <span class="ch-hash">#</span>
+            <span class="ch-topbar-name" id="channelHeaderName">obecný</span>
+            <span class="ch-topbar-desc" id="channelHeaderDesc"></span>
+            <div class="ch-topbar-right">
+              <button class="ch-members-btn" id="chMembersBtn" onclick="toggleMembersPanel()" title="Členové kanálu">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span id="chMembersCount"></span>
+              </button>
+              <button class="ch-edit-btn admin-only" id="chEditBtn" onclick="showEditChannelModal()" title="Upravit kanál" style="display:none">⚙</button>
+            </div>
+          </div>
+          <div style="display:flex;flex:1;min-height:0;overflow:hidden">
+            <div style="flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden">
+              <div id="chatPinned"></div>
+              <div class="chat-msgs" id="chatMsgs"><div class="loading"><div class="spin"></div>Načítám…</div></div>
+              <div class="chat-typing" id="chatTyping"></div>
+              <div class="ch-input-area">
+                <div id="replyBar" style="display:none"></div>
+                <div class="ch-input-row">
+                  <button class="ch-emoji-btn" onclick="toggleEmojiPicker(event)" title="Emoji">😊</button>
+                  <textarea class="chat-input" id="chatInput" placeholder="Napiš zprávu…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}" oninput="onChatInput()" onblur="stopTyping()"></textarea>
+                  <button class="chat-send" onclick="sendChat()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Members panel -->
+            <div class="ch-members-panel" id="chMembersPanel">
+              <div class="ch-members-panel-header">Členové</div>
+              <div style="flex:1;overflow-y:auto;overflow-x:hidden" id="chMembersList"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- Emoji picker overlay -->
+    <div id="emojiPickerOverlay" style="display:none;position:fixed;z-index:600;background:var(--surface);border:1px solid var(--border-l);border-radius:16px;padding:12px;box-shadow:0 16px 48px rgba(0,0,0,.65);width:288px;animation:fu .15s ease"><div style="display:flex;flex-wrap:wrap;gap:3px"></div></div>
 
 
     <!-- MY STATS -->
@@ -1185,14 +1516,14 @@ async function restoreSession(){
   const un=localStorage.getItem('oxygen_un');if(!un)return;
   try{const snap=await getDoc(doc(db,'users',un));if(snap.exists()){CU=snap.data();if(CU.notifSettings)notifSettings=CU.notifSettings;enterApp();}else localStorage.removeItem('oxygen_un');}catch(e){}
 }
-window.doLogout=()=>{CU=null;_prayerLoaded=false;_prayerDays=new Set();localStorage.removeItem('oxygen_un');unsubs.forEach(u=>u());unsubs=[];location.reload();};
+window.doLogout=()=>{stopTyping();CU=null;_prayerLoaded=false;_prayerDays=new Set();localStorage.removeItem('oxygen_un');unsubs.forEach(u=>u());unsubs=[];location.reload();};
 
 function enterApp(){
   document.getElementById('authWrap').style.display='none';
   if(CU.role==='pending'){document.getElementById('pendScreen').style.display='flex';return;}
   document.getElementById('mainApp').style.display='block';
   document.getElementById('notifBtn').style.display='flex';
-  initUI();startListeners();initEmojiBar();startOnline();loadPrayerLog().then(()=>{renderStreakDash();renderCountdownDash();});
+  initUI();startListeners();initEmojiBar();startOnline();loadPrayerLog().then(()=>{renderStreakDash();renderCountdownDash();});setTimeout(initChannels,100);
   setTimeout(requestPush,2000);
 }
 
@@ -1204,6 +1535,8 @@ function initUI(){
   const rc={admin:'ra',modlitebnik:'rm',mladeznik:'rml'};
   const rb=document.getElementById('uroleEl');rb.textContent=rm[CU.role]||CU.role;rb.className='urole '+rc[CU.role];
   if(isAdmin())document.querySelectorAll('.admin-only').forEach(el=>el.style.display='flex');
+  // Modlitebnik může přidávat kanály — zobraz jen tlačítko + (ne ⚙ správu kategorií)
+  if(CU?.role==='modlitebnik'){const btn=document.getElementById('addChannelBtn');if(btn)btn.style.display='flex';}
   if(CU.role==='mladeznik')['chkAddCard','diaryAddCard'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
   document.querySelectorAll('.ni').forEach(ni=>ni.addEventListener('click',()=>navigate(ni.dataset.sec)));
 }
@@ -1233,6 +1566,7 @@ window.navigate=function navigate(id){
   if(id==='my-stats')renderMyStats();
   if(id==='admin')renderAdminSec();
   if(id==='watch'){renderCalendar();renderWatch();}
+  if(id==='chat'){setTimeout(()=>{const el=document.getElementById('chatInput');if(el){el.style.height='44px';}},50);}
   setTimeout(initCustomSelects,30);
 }
 
@@ -1255,11 +1589,24 @@ function startListeners(){
     const aPend=document.getElementById('aPending');if(aPend&&aPend.style.display!=='none')renderAdminPending();
     const aUsers=document.getElementById('aUsers');if(aUsers&&aUsers.style.display!=='none')renderAdminUsers();
   }));
+  // Pinned message listener (graceful fallback on permission error)
+  try{
+    const pUnsub=onSnapshot(doc(db,'chatMeta','pinned'),snap=>{
+      _pinnedMsg=snap.exists()?{...snap.data()}:null;
+      renderPinned();
+    },err=>{
+      // Permission denied — pinned messages unavailable, continue silently
+      _pinnedMsg=null;renderPinned();
+    });
+    unsubs.push(pUnsub);
+  }catch(e){}
+  // Start typing listener
+  startTypingListener();
   unsubs.push(onSnapshot(query(collection(db,'chat'),orderBy('ts','asc'),limit(300)),snap=>{
     const prev=window._chat||[];window._chat=snap.docs.map(d=>({...d.data(),_id:d.id}));
     const chatOn=document.getElementById('sec-chat').classList.contains('on');
     if(!_fl.chat){const nn=window._chat.filter(m=>!prev.find(p=>p._id===m._id)&&m.author!==CU.username);if(nn.length){if(!chatOn){document.getElementById('bChat').style.display='inline';}if(notifSettings.newChat)addNotif('💬 Nová zpráva',nn[nn.length-1].authorName+': '+nn[nn.length-1].text.slice(0,50),'chat');}}
-    _fl.chat=false;renderChat();if(chatOn)scrollChatBottom();
+    _fl.chat=false;// messages now handled per-channel by switchChannel
   }));
   // prayerLog – real-time streak (načte data okamžitě při startu)
   unsubs.push(onSnapshot(query(collection(db,'prayerLog')),snap=>{
@@ -1423,7 +1770,8 @@ function renderReqs(){
         ${canAns?`<button class="bs b-ans${r.answered?' on':''}" onclick="toggleAns('${r._id}')">${r.answered?'↩ Odznačit':'✓ Vyslyšeno'}</button>`:''}
         ${!canAns&&r.answered?`<span class="ab">✓ Vyslyšeno</span>`:''}
         ${r.answered&&r.answerStory?`<div style="margin-top:8px;padding:8px 12px;background:rgba(6,214,160,.08);border-left:3px solid var(--green);border-radius:0 8px 8px 0;font-size:.82rem;color:var(--text)"><span style="font-size:.7rem;font-weight:800;color:var(--green);display:block;margin-bottom:3px">🙏 Jak Bůh odpověděl:</span>${esc(r.answerStory)}</div>`:''}
-        ${canDel?`<button class="bs b-del" style="margin-left:auto" onclick="delReq('${r._id}')">🗑</button>`:''}
+        <button class="bs" style="background:rgba(155,79,222,.1);border-color:rgba(155,79,222,.3);color:var(--purple-xl);margin-left:auto" onclick="shareToChat('${r._id}')" title="Sdílet do chatu">💬</button>
+        ${canDel?`<button class="bs b-del" onclick="delReq('${r._id}')">🗑</button>`:''}
       </div>
       ${cmtsHTML('requests',r._id,'false',r.createdBy)}
     </div>`;
@@ -1832,7 +2180,7 @@ window.renderWatch=function renderWatch(){
       <div class="wc-header">
         <div class="wc-header-left">
           <div class="wc-status ${statusCls}">
-            <div class="wc-status-dot"></div>${statusIcon} ${statusTxt}${isLeader?' · <span style="color:var(--gold)">👑 Ty vedeš tuto stráž</span>':iJoin?' · <span style="color:var(--green)">✓ Účastníš se</span>':''}
+            <div class="wc-status-dot"></div>${statusIcon} ${statusTxt}${isLeader?'<span class="wc-badge wc-badge-leader">👑 Ty vedeš</span>':iJoin?'<span class="wc-badge wc-badge-join">✓ Účastníš se</span>':''}
           </div>
           <div class="wc-leader">${esc(ldrName)}</div>
           <div class="wc-leader-sub">${esc(w.date)}</div>
@@ -1979,78 +2327,582 @@ async function markDiaryRead(ids){
 }
 window.delDiary=async id=>{const e=(window._diary||[]).find(x=>x._id===id);if(!e)return;if(!isAdmin()&&e.createdBy!==CU.username){toast('Nemáš oprávnění.');return;}confirmDialog('Smazat zápis z deníku?',async()=>{try{await deleteDoc(doc(db,'diary',id));toast('Smazáno');}catch(e){toast('Chyba: '+e.message);}})};
 
-// ── CHAT ──────────────────────────────────────────────────────────────────
-function initEmojiBar(){
-  document.getElementById('emojiBar').innerHTML=EMOJIS.map(e=>`<button class="emoji-btn" onclick="insertEmoji('${e}')">${e}</button>`).join('');
-}
-window.insertEmoji=e=>{const inp=document.getElementById('chatInput');inp.value+=e;inp.focus();};
+// ── CHANNELS ──────────────────────────────────────────────────────────────
+let _activeChannelId=null;
+let _channels=[];
+let _chatUnsub=null;
+let _pinnedUnsub=null;
+let _collapsedCats=new Set();
 
-window.sendChat=async()=>{
-  const inp=document.getElementById('chatInput');const text=inp.value.trim();if(!text)return;
-  const payload={text,author:CU.username,authorName:CU.name,authorEmoji:CU.emoji||'',ts:serverTimestamp()};
-  if(_replyTo){payload.replyTo={id:_replyTo._id,author:_replyTo.authorName,text:_replyTo.text.slice(0,80)};cancelReply();}
-  try{await addDoc(collection(db,'chat'),payload);inp.value='';}catch(e){toast('Chyba: '+e.message);}
+// Kategorie — výchozí pokud kanál nemá kategorii
+const DEFAULT_CAT='Obecné';
+
+async function initChannels(){
+  onSnapshot(query(collection(db,'channels'),orderBy('createdAt','asc')),async snap=>{
+    _channels=snap.docs.map(d=>({...d.data(),_id:d.id}));
+    // Ensure #obecný exists
+    if(!_channels.find(c=>c.isGeneral)){
+      await addDoc(collection(db,'channels'),{name:'obecný',description:'Hlavní kanál celého týmu',category:DEFAULT_CAT,isGeneral:true,members:[],createdBy:'system',createdAt:serverTimestamp()});
+      return;
+    }
+    renderChannelList();
+    if(!_activeChannelId){
+      const general=_channels.find(c=>c.isGeneral);
+      if(general)switchChannel(general._id);
+    }
+  });
+}
+
+function getVisibleChannels(){
+  return _channels.filter(ch=>{
+    if(ch.isGeneral)return true;
+    if(isAdmin())return true; // admin vidí vše
+    return(ch.members||[]).includes(CU.username); // modlitebnik i mládežník jen své
+  });
+}
+
+function renderChannelList(){
+  const el=document.getElementById('channelList');if(!el)return;
+  const visible=getVisibleChannels();
+  // Group by category
+  const cats={};
+  visible.forEach(ch=>{
+    const cat=ch.category||DEFAULT_CAT;
+    if(!cats[cat])cats[cat]=[];
+    cats[cat].push(ch);
+  });
+  const canAdd=isAdmin()||CU?.role==='modlitebnik';
+  let html='';
+  Object.entries(cats).forEach(([cat,chs])=>{
+    const collapsed=_collapsedCats.has(cat);
+    html+=`<div class="ch-category${collapsed?' collapsed':''}" onclick="toggleCat('${esc(cat)}')">
+      <span class="ch-category-name"><span style="transition:transform .2s;display:inline-block;transform:rotate(${collapsed?'-90':'-0'}deg)">▾</span> ${esc(cat)}</span>
+      ${canAdd?`<button class="ch-category-add" onclick="event.stopPropagation();showAddChannelModal('${esc(cat)}')" title="Přidat kanál do ${esc(cat)}">+</button>`:''}
+    </div>`;
+    if(!collapsed){
+      html+=chs.map(ch=>{
+        const active=ch._id===_activeChannelId;
+        const canDel=!ch.isGeneral&&(isAdmin()||(CU?.role==='modlitebnik'&&ch.createdBy===CU.username));
+        return`<div class="ch-item${active?' active':''}" onclick="switchChannel('${ch._id}')">
+          <span class="ch-item-hash">#</span>
+          <span class="ch-item-name">${esc(ch.name)}</span>
+          ${canDel?`<button class="ch-item-del" onclick="event.stopPropagation();delChannel('${ch._id}')" title="Smazat kanál"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>`:''}
+        </div>`;
+      }).join('');
+    }
+  });
+  if(!html)html='<div style="padding:12px 16px;font-size:.8rem;color:var(--muted)">Žádné kanály</div>';
+  el.innerHTML=html;
+}
+
+window.toggleCat=cat=>{
+  if(_collapsedCats.has(cat))_collapsedCats.delete(cat);
+  else _collapsedCats.add(cat);
+  renderChannelList();
 };
 
+window.switchChannel=function switchChannel(channelId){
+  _activeChannelId=channelId;
+  const ch=_channels.find(c=>c._id===channelId);
+  const nameEl=document.getElementById('channelHeaderName');
+  const descEl=document.getElementById('channelHeaderDesc');
+  if(nameEl)nameEl.textContent=ch?.name||'';
+  if(descEl)descEl.textContent=ch?.description?'· '+ch.description:'';
+  // Member count button
+  const cntEl=document.getElementById('chMembersCount');
+  const membersBtn=document.getElementById('chMembersBtn');
+  if(cntEl){
+    const allU=window._users||{};
+    const adminCount=Object.values(allU).filter(u=>u.role==='admin').length;
+    let cnt;
+    if(!ch||ch.isGeneral){
+      cnt=Object.values(allU).filter(u=>u.role!=='pending').length;
+    } else {
+      const memberSet=new Set(ch.members||[]);
+      Object.values(allU).filter(u=>u.role==='admin').forEach(u=>memberSet.add(u.username));
+      cnt=memberSet.size;
+    }
+    cntEl.textContent=cnt||'';
+  }
+  // Edit button — only for non-general channels, admin only
+  const editBtn=document.getElementById('chEditBtn');
+  if(editBtn)editBtn.style.display=((isAdmin()||(CU?.role==='modlitebnik'&&ch?.createdBy===CU.username))&&ch&&!ch.isGeneral)?'block':'none';
+  // Close members panel when switching
+  const panel=document.getElementById('chMembersPanel');
+  if(panel){panel.classList.remove('open');document.getElementById('chMembersBtn')?.classList.remove('active');}
+  renderChannelList();
+  renderMembersPanel(ch);
+  // Pinned
+  if(_pinnedUnsub){_pinnedUnsub();_pinnedUnsub=null;}
+  _pinnedMsg=null;
+  const pe=document.getElementById('chatPinned');if(pe)pe.innerHTML='';
+  try{
+    _pinnedUnsub=onSnapshot(doc(db,'channelPinned',channelId),snap=>{
+      _pinnedMsg=snap.exists()?{...snap.data()}:null;renderPinned();
+    },()=>{_pinnedMsg=null;renderPinned();});
+  }catch(e){}
+  // Messages
+  if(_chatUnsub){_chatUnsub();_chatUnsub=null;}
+  const me=document.getElementById('chatMsgs');
+  if(me)me.innerHTML='<div class="loading" style="padding:30px 0"><div class="spin"></div></div>';
+  _chatUnsub=onSnapshot(
+    query(collection(db,'channels',channelId,'messages'),orderBy('ts','asc'),limit(200)),
+    snap=>{
+      window._chat=snap.docs.map(d=>({...d.data(),_id:d.id}));
+      renderChat();
+      if(document.getElementById('sec-chat')?.classList.contains('on'))scrollChatBottom();
+    }
+  );
+}
+
+// ── MEMBERS PANEL ─────────────────────────────────────────────────────────
+function renderMembersPanel(ch){
+  const el=document.getElementById('chMembersList');if(!el)return;
+  const allU=window._users||{};
+  const now50=Date.now();const onlineSet=new Set(Object.entries(window._onlineData||{}).filter(([,d])=>d.t&&(now50-d.t)<50000).map(([k])=>k));
+  let members;
+  if(!ch||ch.isGeneral){
+    members=Object.values(allU).filter(u=>u.role!=='pending').sort((a,b)=>a.name.localeCompare(b.name,'cs'));
+  } else {
+    // Admini jsou vždy členy všech kanálů (i když nejsou v members[])
+    const adminUsernames=new Set(Object.values(allU).filter(u=>u.role==='admin').map(u=>u.username));
+    const channelMembers=new Set(ch.members||[]);
+    adminUsernames.forEach(un=>channelMembers.add(un));
+    members=[...channelMembers].map(un=>allU[un]).filter(Boolean).sort((a,b)=>a.name.localeCompare(b.name,'cs'));
+  }
+  // Sort: online first
+  members.sort((a,b)=>{const ao=onlineSet.has(a.username),bo=onlineSet.has(b.username);return bo-ao||a.name.localeCompare(b.name,'cs');});
+  if(!members.length){el.innerHTML='<div style="padding:16px;color:var(--muted);font-size:.8rem;text-align:center">Žádní členové</div>';return;}
+  // Group: online / offline
+  const online=members.filter(u=>onlineSet.has(u.username));
+  const offline=members.filter(u=>!onlineSet.has(u.username));
+  let html='';
+  if(online.length){html+=`<div style="padding:8px 14px 3px;font-size:.65rem;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:.06em">Online — ${online.length}</div>`;}
+  online.forEach(u=>{html+=memberRow(u,true);});
+  if(offline.length){html+=`<div style="padding:8px 14px 3px;font-size:.65rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:4px">Offline — ${offline.length}</div>`;}
+  offline.forEach(u=>{html+=memberRow(u,false);});
+  el.innerHTML=html;
+}
+function memberRow(u,online){
+  const rm={admin:'Admin',modlitebnik:'Modlitebník',mladeznik:'Mládežník'};
+  const rc={admin:'ra',modlitebnik:'rm',mladeznik:'rml'};
+  const roleLabel=rm[u.role]||'';
+  const roleCls=rc[u.role]||'rml';
+  return`<div class="ch-member-row" onclick="showUserProfile('${u.username}')">
+    <div class="ch-member-av${u.emoji?' ea':''}${online?' ch-member-online':''}">${u.emoji||ini(u.name)}</div>
+    <div style="flex:1;min-width:0;overflow:hidden">
+      <div style="display:flex;align-items:center;gap:4px;flex-wrap:nowrap;overflow:hidden">
+        <div class="ch-member-name" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:1;min-width:0">${esc(u.name)}</div>
+        ${roleLabel?`<span class="urole ${roleCls}" style="font-size:.6rem;padding:1px 5px;flex-shrink:0">${roleLabel}</span>`:''}
+      </div>
+      <div class="ch-member-status">${online?'Online':'Offline'}</div>
+    </div>
+  </div>`;
+}
+window.toggleMembersPanel=()=>{
+  const panel=document.getElementById('chMembersPanel');
+  const btn=document.getElementById('chMembersBtn');
+  if(!panel)return;
+  const open=panel.classList.toggle('open');
+  btn?.classList.toggle('active',open);
+  if(open){
+    const ch=_channels.find(c=>c._id===_activeChannelId);
+    renderMembersPanel(ch);
+  }
+};
+
+// ── EDIT CHANNEL MODAL ────────────────────────────────────────────────────
+window.showEditChannelModal=()=>{
+  const ch=_channels.find(c=>c._id===_activeChannelId);if(!ch||ch.isGeneral)return;
+  document.getElementById('editChannelModal')?.remove();
+  const allUsers=Object.values(window._users||{}).filter(u=>u.role!=='pending').sort((a,b)=>a.name.localeCompare(b.name,'cs'));
+  const m=document.createElement('div');m.className='modal-bg';m.id='editChannelModal';
+  m.innerHTML=`<div class="modal" onclick="event.stopPropagation()" style="max-width:440px">
+    <button class="modal-close" onclick="closeModal('editChannelModal')">✕</button>
+    <h2>⚙ Upravit kanál #${esc(ch.name)}</h2>
+    <div class="fg" style="margin-bottom:10px"><label>Název kanálu</label>
+      <input type="text" id="editChName" value="${esc(ch.name)}" maxlength="40"></div>
+    <div class="fg" style="margin-bottom:14px"><label>Popis</label>
+      <input type="text" id="editChDesc" value="${esc(ch.description||'')}" placeholder="Krátký popis kanálu" maxlength="100"></div>
+    <div class="lbl" style="margin-bottom:4px">Členové <span style="font-weight:400;text-transform:none;color:var(--muted)">(prázdné = všichni)</span></div>
+    <div style="font-size:.74rem;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:5px"><span style="color:var(--gold)">ℹ</span> Admini mají přístup ke všem kanálům automaticky.</div>
+    <div style="max-height:220px;overflow-y:auto;border:1px solid var(--border);border-radius:10px;padding:4px;margin-bottom:16px;background:rgba(0,0,0,.1)">
+      ${(()=>{const rm2={admin:'Admin',modlitebnik:'Modlitebník',mladeznik:'Mládežník'};const rc2={admin:'ra',modlitebnik:'rm',mladeznik:'rml'};return allUsers.map(u=>{const checked=(ch.members||[]).includes(u.username)?'checked':'';const roleLabel=rm2[u.role]||'';const roleCls=rc2[u.role]||'rml';const avBg=u.emoji?'background:var(--surface)':'background:linear-gradient(135deg,var(--purple),var(--purple-d))';const isAdminUser=u.role==='admin';
+const lockedChecked=isAdminUser?'checked disabled':'';
+const inputClass=isAdminUser?'':'editChMember';
+return`<label class="ch-member-check-wrap${isAdminUser?' locked':''}">
+        <input type="checkbox" ${inputClass?`class="${inputClass}"`:''}  value="${u.username}" ${isAdminUser?lockedChecked:checked}>
+        <div class="ch-cb${isAdminUser?' ch-cb-locked':''}"></div>
+        <div style="width:26px;height:26px;border-radius:50%;${avBg};display:flex;align-items:center;justify-content:center;font-size:${u.emoji?'.95rem':'.58rem'};font-weight:800;color:#fff;flex-shrink:0">${u.emoji||ini(u.name)}</div>
+        <span style="font-size:.85rem;flex:1;font-weight:600">${esc(u.name)}</span>
+        ${roleLabel?`<span class="ch-member-role ${roleCls}">${roleLabel}</span>`:''}
+        <span style="font-size:.68rem;color:var(--muted)">@${esc(u.username)}</span>
+      </label>`;}).join('');})()} 
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="bp" onclick="saveChannelEdit('${ch._id}')" style="flex:1">Uložit změny</button>
+      <button class="bs b-del" onclick="delChannel('${ch._id}')" style="padding:10px 16px">🗑 Smazat kanál</button>
+    </div>
+    <div id="editChMsg" class="amsg" style="margin-top:10px"></div>
+  </div>`;
+  m.addEventListener('click',e=>{if(e.target===m)closeModal('editChannelModal');});
+  document.body.appendChild(m);
+};
+window.saveChannelEdit=async(id)=>{
+  const name=document.getElementById('editChName')?.value.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-čšžýáíéůúěřďťňó]/g,'');
+  const desc=document.getElementById('editChDesc')?.value.trim()||'';
+  const msgEl=document.getElementById('editChMsg');
+  if(!name){if(msgEl){msgEl.className='amsg err';msgEl.textContent='Zadej název';msgEl.style.display='block';}return;}
+  const members=[...document.querySelectorAll('.editChMember:checked')].map(cb=>cb.value);
+  // Vždy přidej všechny adminy
+  Object.values(window._users||{}).filter(u=>u.role==='admin').forEach(u=>{if(!members.includes(u.username))members.push(u.username);});
+  // Tvůrce kanálu vždy přidej
+  if(!members.includes(CU.username))members.push(CU.username);
+  try{
+    await updateDoc(doc(db,'channels',id),{name,description:desc,members});
+    // Okamžitě aktualizuj lokální cache bez čekání na onSnapshot
+    const idx=_channels.findIndex(c=>c._id===id);
+    if(idx!==-1){
+      _channels[idx]={..._channels[idx],name,description:desc,members};
+    }
+    renderChannelList();
+    // Aktualizuj topbar pokud jde o aktivní kanál
+    if(_activeChannelId===id){
+      const nameEl=document.getElementById('channelHeaderName');
+      const descEl=document.getElementById('channelHeaderDesc');
+      if(nameEl)nameEl.textContent=name;
+      if(descEl)descEl.textContent=desc?'· '+desc:'';
+      const cntEl=document.getElementById('chMembersCount');
+      // Pro kanál s prázdnými členy (= všichni) zobraz počet všech uživatelů
+      const allCount=Object.values(window._users||{}).filter(u=>u.role!=='pending').length;
+      if(cntEl)cntEl.textContent=members.length?members.length:allCount;
+      // Okamžitě překresli panel členů (nejen pokud je otevřený)
+      renderMembersPanel(idx!==-1?_channels[idx]:null);
+    }
+    closeModal('editChannelModal');
+    toast('\u2705 Kanál upraven');
+  }catch(e){if(msgEl){msgEl.className='amsg err';msgEl.textContent='Chyba: '+e.message;msgEl.style.display='block';}}
+};
+
+window.showManageCatsModal=()=>{
+  document.getElementById('manageCatsModal')?.remove();
+  const cats=[...new Set(_channels.filter(c=>!c.isGeneral).map(c=>c.category||DEFAULT_CAT))].filter(Boolean);
+  const m=document.createElement('div');m.className='modal-bg';m.id='manageCatsModal';
+  m.innerHTML=`<div class="modal" onclick="event.stopPropagation()" style="max-width:380px">
+    <button class="modal-close" onclick="closeModal('manageCatsModal')">✕</button>
+    <h2>⚙ Spravovat kategorie</h2>
+    <p style="color:var(--muted);font-size:.83rem;margin-bottom:16px">Smazáním kategorie se kanály přesunou do výchozí kategorie.</p>
+    ${cats.length?cats.map(cat=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;margin-bottom:7px">
+      <span style="font-size:.87rem;font-weight:700;color:var(--text)">📁 ${esc(cat)}</span>
+      <button class="bs b-del" onclick="deleteCat('${esc(cat)}')">🗑 Smazat</button>
+    </div>`).join(''):'<div style="color:var(--muted);font-size:.85rem;text-align:center;padding:20px">Žádné vlastní kategorie.</div>'}
+  </div>`;
+  m.addEventListener('click',e=>{if(e.target===m)closeModal('manageCatsModal');});
+  document.body.appendChild(m);
+};
+window.deleteCat=async(cat)=>{
+  confirmDialog(`Smazat kategorii "${cat}"? Kanály se přesunou do "${DEFAULT_CAT}".`,async()=>{
+    const toUpdate=_channels.filter(c=>c.category===cat&&!c.isGeneral);
+    for(const ch of toUpdate){
+      try{await updateDoc(doc(db,'channels',ch._id),{category:DEFAULT_CAT});}catch(e){}
+    }
+    toast(`Kategorie "${cat}" smazána`);
+    closeModal('manageCatsModal');
+  });
+};
+
+window.showAddChannelModal=(defaultCat)=>{
+  if(!isAdmin()&&CU?.role!=='modlitebnik'){toast('Nemáš oprávnění vytvářet kanály.');return;}
+  document.getElementById('addChannelModal')?.remove();
+  const allUsers=Object.values(window._users||{}).filter(u=>u.role!=='pending'&&u.username!==CU.username).sort((a,b)=>a.name.localeCompare(b.name,'cs'));
+  const existingCats=[...new Set(_channels.map(c=>c.category||DEFAULT_CAT))].filter(Boolean);
+  // Build category buttons
+  const catBtns=existingCats.map(c=>`<button type="button" class="bs b-ghost" style="font-size:.8rem;padding:5px 12px" onclick="document.getElementById('newChCat').value=this.textContent;document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('on'));this.classList.add('on')">${esc(c)}</button>`).join('');
+  const m=document.createElement('div');m.className='modal-bg';m.id='addChannelModal';
+  m.innerHTML=`<div class="modal" onclick="event.stopPropagation()" style="max-width:440px">
+    <button class="modal-close" onclick="closeModal('addChannelModal')">✕</button>
+    <h2>💬 Nový kanál</h2>
+    <div class="fg" style="margin-bottom:12px">
+      <label>Název kanálu</label>
+      <input type="text" id="newChName" placeholder="napr. modlitba-vedení" maxlength="40">
+    </div>
+    <div class="fg" style="margin-bottom:12px">
+      <label>Popis <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(nepovinné)</span></label>
+      <input type="text" id="newChDesc" placeholder="Krátký popis účelu kanálu" maxlength="100">
+    </div>
+    <div style="margin-bottom:12px">
+      <div class="lbl" style="margin-bottom:6px">Sekce <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(volitelné)</span></div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px">${catBtns}</div>
+      <input type="text" id="newChCat" placeholder="Nebo napiš novou sekci…" value="${defaultCat||''}" maxlength="40" style="width:100%;padding:8px 12px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'Nunito',sans-serif;font-size:.87rem;outline:none">
+    </div>
+    <div style="margin-bottom:14px">
+      <div class="lbl" style="margin-bottom:6px">Přístup <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(prázdné = celý tým)</span></div>
+      <div style="font-size:.74rem;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:5px"><span style="color:var(--gold)">ℹ</span> Admini mají přístup ke všem kanálům automaticky. Ty budeš přidán/a jako tvůrce.</div>
+      <div style="max-height:170px;overflow-y:auto;border:1px solid var(--border);border-radius:10px;padding:4px;background:rgba(0,0,0,.1)">
+        ${allUsers.map(u=>`<label style="display:flex;align-items:center;gap:8px;padding:6px 8px;cursor:pointer;border-radius:7px;transition:background .1s" onmouseover="this.style.background='rgba(123,47,190,.1)'" onmouseout="this.style.background=''">
+          <input type="checkbox" class="newChMember" value="${u.username}" style="accent-color:var(--purple);width:15px;height:15px;flex-shrink:0">
+          <div style="width:26px;height:26px;border-radius:50%;background:${u.emoji?'var(--surface)':'linear-gradient(135deg,var(--purple),var(--purple-d))'};display:flex;align-items:center;justify-content:center;font-size:${u.emoji?'.9rem':'.6rem'};font-weight:800;color:#fff;flex-shrink:0">${u.emoji||ini(u.name)}</div>
+          <span style="font-size:.85rem;flex:1">${esc(u.name)}</span>
+          <span style="font-size:.7rem;color:var(--muted)">@${esc(u.username)}</span>
+        </label>`).join('')}
+      </div>
+    </div>
+    <button class="bp" onclick="createChannel()">Vytvořit kanál</button>
+    <div id="addChMsg" class="amsg" style="margin-top:10px"></div>
+  </div>`;
+  m.addEventListener('click',e=>{if(e.target===m)closeModal('addChannelModal');});
+  document.body.appendChild(m);
+  setTimeout(()=>document.getElementById('newChName')?.focus(),50);
+};
+
+window.createChannel=async()=>{
+  if(!isAdmin()&&CU?.role!=='modlitebnik'){toast('Nemáš oprávnění vytvářet kanály.');return;}
+  const category=document.getElementById('newChCat')?.value.trim()||DEFAULT_CAT;
+  const rawName=document.getElementById('newChName')?.value.trim();
+  const name=rawName.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-čšžýáíéůúěřďťňó]/g,'');
+  const desc=document.getElementById('newChDesc')?.value.trim()||'';
+  const msgEl=document.getElementById('addChMsg');
+  if(!name){if(msgEl){msgEl.className='amsg err';msgEl.textContent='Zadej název kanálu';msgEl.style.display='block';}return;}
+  if(_channels.find(c=>c.name===name)){if(msgEl){msgEl.className='amsg err';msgEl.textContent='Kanál s tímto názvem již existuje';msgEl.style.display='block';}return;}
+  const members=[...document.querySelectorAll('.newChMember:checked')].map(cb=>cb.value);
+  // Vždy přidej tvůrce kanálu
+  if(!members.includes(CU.username))members.push(CU.username);
+  // Vždy přidej všechny adminy
+  Object.values(window._users||{}).filter(u=>u.role==='admin').forEach(u=>{if(!members.includes(u.username))members.push(u.username);});
+  try{
+    const r=await addDoc(collection(db,'channels'),{name,description:desc,category,isGeneral:false,members,createdBy:CU.username,createdAt:serverTimestamp()});
+    closeModal('addChannelModal');
+    toast(`# ${name} vytvořen`);
+    switchChannel(r.id);
+  }catch(e){if(msgEl){msgEl.className='amsg err';msgEl.textContent='Chyba: '+e.message;msgEl.style.display='block';}}
+};
+
+window.delChannel=async id=>{
+  const ch=_channels.find(c=>c._id===id);if(!ch||ch.isGeneral)return;
+  confirmDialog(`Smazat kanál #${ch.name}? Zprávy budou ztraceny.`,async()=>{
+    try{
+      await deleteDoc(doc(db,'channels',id));
+      if(_activeChannelId===id){const g=_channels.find(c=>c.isGeneral);if(g)switchChannel(g._id);}
+      toast('Kanál smazán');
+    }catch(e){toast('Chyba: '+e.message);}
+  });
+};
+
+// ── CHAT ──────────────────────────────────────────────────────────────────
+function initEmojiBar(){
+  const overlay=document.getElementById('emojiPickerOverlay');if(!overlay)return;
+  const grid=overlay.querySelector('#emojiPickerGrid')||overlay.querySelector('div');
+  if(grid)grid.innerHTML=EMOJIS.map(e=>`<button onclick="insertEmoji('${e}');document.getElementById('emojiPickerOverlay').style.display='none'" style="background:none;border:none;cursor:pointer;font-size:1.35rem;padding:5px;border-radius:8px;transition:background .1s,transform .1s;line-height:1;width:36px;height:36px;display:flex;align-items:center;justify-content:center" onmouseover="this.style.background='rgba(123,47,190,.2)';this.style.transform='scale(1.15)'" onmouseout="this.style.background='transparent';this.style.transform=''">${e}</button>`).join('');
+}
+window.toggleEmojiPicker=(ev)=>{
+  const overlay=document.getElementById('emojiPickerOverlay');if(!overlay)return;
+  if(overlay.style.display!=='none'){overlay.style.display='none';return;}
+  const btn=ev.currentTarget||ev.target;
+  const rect=btn.getBoundingClientRect();
+  const oW=292;const oH=overlay.offsetHeight||220;
+  let left=rect.left;let top=rect.top-oH-8;
+  if(left+oW>window.innerWidth-8)left=window.innerWidth-oW-8;
+  if(top<8)top=rect.bottom+8;
+  overlay.style.left=Math.max(8,left)+'px';overlay.style.top=Math.max(8,top)+'px';
+  overlay.style.display='block';
+  setTimeout(()=>{
+    const close=e=>{if(!overlay.contains(e.target)&&!e.target.closest('.ch-emoji-btn')){overlay.style.display='none';document.removeEventListener('click',close);}};
+    document.addEventListener('click',close);
+  },60);
+};
+window.insertEmoji=e=>{const inp=document.getElementById('chatInput');const pos=inp.selectionStart||inp.value.length;inp.value=inp.value.slice(0,pos)+e+inp.value.slice(pos);inp.selectionStart=inp.selectionEnd=pos+e.length;inp.focus();autoResizeChatInput();};
+function autoResizeChatInput(){
+  const el=document.getElementById('chatInput');if(!el)return;
+  // Temporarily shrink to measure true scrollHeight
+  el.style.overflow='hidden';
+  el.style.height='44px';
+  const h=Math.min(el.scrollHeight,160);
+  if(parseInt(el.style.height)!==h){
+    el.style.height=h+'px';
+  }
+  el.style.overflow=h>=160?'auto':'hidden';
+}
+
+// ── TYPING INDICATOR ──────────────────────────────────────────────────────
+let _typingTimeout=null;let _isTyping=false;
+window.onChatInput=()=>{
+  autoResizeChatInput();
+  if(!_isTyping){
+    _isTyping=true;
+    updateDoc(doc(db,'online',CU.username),{typing:true,typingTs:serverTimestamp()}).catch(()=>{});
+  }
+  clearTimeout(_typingTimeout);
+  _typingTimeout=setTimeout(stopTyping,3000);
+};
+window.stopTyping=()=>{
+  if(!_isTyping)return;_isTyping=false;
+  clearTimeout(_typingTimeout);
+  updateDoc(doc(db,'online',CU.username),{typing:false}).catch(()=>{});
+};
+function startTypingListener(){
+  setInterval(()=>{
+    const el=document.getElementById('chatTyping');if(!el)return;
+    if(!document.getElementById('sec-chat')?.classList.contains('on')){el.textContent='';return;}
+    const now=Date.now();
+    const typers=Object.values(window._onlineData||{}).filter(u=>
+      u.username!==CU.username&&u.typing&&u.typingTs&&(now-((u.typingTs?.toDate?.()?.getTime?.())||0)<4000)
+    );
+    if(!typers.length){el.textContent='';return;}
+    const names=typers.map(u=>u.name?.split(' ')[0]||u.username);
+    el.textContent=names.length===1?`${names[0]} píše…`:names.slice(0,-1).join(', ')+' a '+names.at(-1)+' píší…';
+  },1000);
+}
+
+// ── PINNED MESSAGE ────────────────────────────────────────────────────────
+let _pinnedMsg=null;
+function renderPinned(){
+  const el=document.getElementById('chatPinned');if(!el)return;
+  if(!_pinnedMsg){el.innerHTML='';return;}
+  const m=_pinnedMsg;
+  el.innerHTML=`<div class="chat-pinned">
+    <span class="chat-pinned-icon">📌</span>
+    <div class="chat-pinned-content" onclick="scrollToMsg('${m._id||m.msgId||''}')">
+      <div class="chat-pinned-label">Připnutá zpráva · ${esc(m.authorName||m.author||'')}</div>
+      <div class="chat-pinned-msg">${esc((m.text||'').slice(0,120))}${(m.text||'').length>120?'…':''}</div>
+    </div>
+    ${isAdmin()?`<button class="chat-pinned-unpin" onclick="unpinMsg()">Odepnout</button>`:''}
+  </div>`;
+}
+window.pinMsg=async id=>{
+  const m=(window._chat||[]).find(x=>x._id===id);if(!m||!_activeChannelId)return;
+  try{await setDoc(doc(db,'channelPinned',_activeChannelId),{msgId:id,text:m.text,authorName:m.authorName||m.author,_id:id,ts:serverTimestamp()});toast('📌 Zpráva připnuta');}
+  catch(e){toast('Chyba: '+e.message);}
+};
+window.unpinMsg=async()=>{
+  if(!_activeChannelId)return;
+  try{await deleteDoc(doc(db,'channelPinned',_activeChannelId));toast('Zpráva odepnuta');}catch(e){toast('Chyba: '+e.message);}
+};
+window.scrollToMsg=id=>{
+  const el=document.getElementById('cm-'+id);if(!el)return;
+  el.scrollIntoView({behavior:'smooth',block:'center'});
+  el.style.transition='background .3s';el.style.background='rgba(255,209,102,.12)';
+  setTimeout(()=>{el.style.background='';},1400);
+};
+
+// ── SEND CHAT ─────────────────────────────────────────────────────────────
+window.sendChat=async()=>{
+  const inp=document.getElementById('chatInput');const text=inp.value.trim();if(!text)return;
+  if(!_activeChannelId){toast('Vyber kanál');return;}
+  const payload={text,author:CU.username,authorName:CU.name,authorEmoji:CU.emoji||'',ts:serverTimestamp()};
+  if(_replyTo){payload.replyTo={id:_replyTo._id,author:_replyTo.authorName||_replyTo.author,text:_replyTo.text.slice(0,100)};cancelReply();}
+  inp.value='';inp.style.height='44px';stopTyping();
+  const _sb=document.querySelector('.chat-send');if(_sb){_sb.classList.add('sending');setTimeout(()=>_sb.classList.remove('sending'),300);}
+  try{await addDoc(collection(db,'channels',_activeChannelId,'messages'),payload);}catch(e){toast('Chyba: '+e.message);}
+};
+
+window.shareToChat=async(reqId)=>{
+  const r=(window._req||[]).find(x=>x._id===reqId);if(!r)return;
+  const text=`🙏 Sdílím žádost: „${r.text.slice(0,120)}${r.text.length>120?'…':''}"`;
+  try{
+    if(!_activeChannelId){toast('Otevři chat a vyber kanál');return;}
+    await addDoc(collection(db,'channels',_activeChannelId,'messages'),{text,author:CU.username,authorName:CU.name,authorEmoji:CU.emoji||'',sharedReqId:reqId,ts:serverTimestamp()});
+    navigate('chat');setTimeout(scrollChatBottom,200);toast('🙏 Žádost sdílena do chatu');
+  }catch(e){toast('Chyba: '+e.message);}
+};
+
+// ── RENDER CHAT ───────────────────────────────────────────────────────────
+let _lastReadTs=0;
 function renderChat(){
-  const el=document.getElementById('chatMsgs');const msgs=window._chat||[];
+  const el=document.getElementById('chatMsgs');if(!el)return;const msgs=window._chat||[];
   if(!msgs.length){el.innerHTML='<div class="empty"><div class="ei">💬</div><p>Zatím žádné zprávy. Buď první!</p></div>';return;}
-  const atBottom=el.scrollHeight-el.clientHeight-el.scrollTop<100;
-  el.innerHTML=msgs.map(m=>{
+  const atBottom=el.scrollHeight-el.clientHeight-el.scrollTop<140;
+  const allU=window._users||{};
+  let html='';let lastDate='';let lastAuthor='';let lastTs=0;let unreadShown=false;
+  msgs.forEach(m=>{
+    // Date separator
+    const msgDate=m.ts?.toDate?m.ts.toDate():new Date(m.ts||0);
+    const dateStr=msgDate.toDateString();
+    if(dateStr!==lastDate){
+      lastDate=dateStr;lastAuthor='';
+      const today=new Date().toDateString();const yest=new Date(Date.now()-86400000).toDateString();
+      const label=dateStr===today?'Dnes':dateStr===yest?'Včera':msgDate.toLocaleDateString('cs-CZ',{day:'numeric',month:'long'});
+      html+=`<div class="chat-date-sep"><span>${label}</span></div>`;
+    }
+    // Unread separator
+    if(!unreadShown&&_lastReadTs&&(m.ts?.seconds||0)*1000>_lastReadTs&&m.author!==CU.username){
+      unreadShown=true;html+=`<div class="chat-unread-sep"><span>↓ Nepřečtené zprávy</span></div>`;
+    }
     const mine=m.author===CU.username;
-    const avEl=m.authorEmoji?`<div class="chat-av ea profile-clickable" onclick="showUserProfile('${m.author}')">${m.authorEmoji}</div>`:`<div class="chat-av profile-clickable" onclick="showUserProfile('${m.author}')">${ini(m.authorName||'?')}</div>`;
+    const grouped=m.author===lastAuthor&&(msgDate-new Date(lastTs||0))<240000;
+    lastAuthor=m.author;lastTs=msgDate;
+    const u=allU[m.author];
+    // Avatar: hidden if grouped, shown on first in group
+    const avEl=grouped
+      ?`<div class="chat-av hidden"></div>`
+      :(u?.emoji?`<div class="chat-av ea" onclick="showUserProfile('${m.author}')" title="${esc(u.name||m.author)}">${u.emoji}</div>`
+                :`<div class="chat-av" onclick="showUserProfile('${m.author}')" title="${esc(m.authorName||m.author)}">${ini(m.authorName||'?')}</div>`);
+    // Reactions
     const reacts=m.reactions||{};
-    const reactHTML=Object.entries(reacts).filter(([,v])=>v.length>0).map(([emoji,users])=>`<span class="reaction ${users.includes(CU.username)?'mine':''}" onclick="toggleReact('${m._id}','${emoji}')">${emoji} <span class="reaction-count">${users.length}</span></span>`).join('');
+    const reactHTML=Object.entries(reacts).filter(([,v])=>v.length>0).map(([emoji,users])=>{
+      const names=users.map(un=>allU[un]?.name?.split(' ')[0]||un).join(', ');
+      return`<span class="reaction${users.includes(CU.username)?' mine':''}" onclick="toggleReact('${m._id}','${emoji}')"><span class="reaction-tooltip">${esc(names)}</span>${emoji} <span class="reaction-count">${users.length}</span></span>`;
+    }).join('');
     const canDel=isAdmin()||m.author===CU.username;
-    return`<div class="chat-msg ${mine?'mine':''}" id="cm-${m._id}">
+    const timeStr=msgDate.toLocaleTimeString('cs-CZ',{hour:'2-digit',minute:'2-digit'});
+    // Shared prayer
+    const sharedReq=m.sharedReqId?(window._req||[]).find(r=>r._id===m.sharedReqId):null;
+    const sharedHTML=sharedReq?`<div class="chat-prayer-share" onclick="navigate('requests')"><div class="chat-prayer-share-label">🙏 Žádost o modlitbu</div><div class="chat-prayer-share-text">${esc(sharedReq.text.slice(0,140))}${sharedReq.text.length>140?'…':''}</div></div>`:'';
+    // Reply quote
+    const replyHTML=m.replyTo?`<div class="chat-reply-quote" onclick="scrollToMsg('${m.replyTo.id||''}')"><strong>${esc(m.replyTo.author||'')}</strong>${esc((m.replyTo.text||'').slice(0,80))}</div>`:'';
+    // Meta row (name + time) — only on first in group
+    const metaHTML=grouped?'':`<div class="chat-meta">${!mine?`<span class="chat-name" onclick="showUserProfile('${m.author}')">${esc(m.authorName||m.author)}</span>`:''}<span class="chat-meta-time">${timeStr}</span></div>`;
+    html+=`<div class="chat-msg-group${mine?' mine':''}${grouped?' grouped':''}" id="cm-${m._id}">
       ${avEl}
       <div class="chat-bubble-wrap">
-        <div class="chat-name profile-clickable" onclick="showUserProfile('${m.author}')">${esc(m.authorName||m.author)}</div>
+        ${metaHTML}
         <div class="chat-bubble">
-          ${m.replyTo?`<div style="background:rgba(123,47,190,.15);border-left:3px solid var(--purple-l);border-radius:0 7px 7px 0;padding:5px 9px;margin-bottom:6px;font-size:.77rem;color:var(--muted)"><strong style="color:var(--purple-xl)">${esc(m.replyTo.author)}</strong><br>${esc(m.replyTo.text)}</div>`:''}
+          ${replyHTML}
           <div class="chat-text">${esc(m.text)}</div>
-          <div class="chat-footer">
-            <span class="chat-time">${fmtTs(m.ts)}</span>
-            <div class="chat-actions">
-              <button class="chat-act-btn" onclick="openReactPicker('${m._id}',event)" title="Reakce">😊</button>
-              <button class="chat-act-btn" onclick="setReply('${m._id}')" title="Odpovědět">↩</button>
-              ${canDel?`<button class="chat-act-btn" onclick="delChat('${m._id}')" title="Smazat" style="color:var(--red)">🗑</button>`:''}
-            </div>
-          </div>
+          ${sharedHTML}
+          ${grouped?`<div class="chat-time-inline">${timeStr}</div>`:''}
         </div>
-        ${reactHTML?`<div class="reactions">${reactHTML}</div>`:''}
+        ${reactHTML?`<div class="chat-reactions">${reactHTML}</div>`:''}
+      </div>
+      <div class="chat-actions-wrap">
+        <button class="chat-act-btn" onclick="openReactPicker('${m._id}',event)" title="Reakce">😊</button>
+        <button class="chat-act-btn" onclick="setReply('${m._id}')" title="Odpovědět">↩</button>
+        ${isAdmin()?`<button class="chat-act-btn" onclick="pinMsg('${m._id}')" title="Připnout">📌</button>`:''}
+        ${canDel?`<button class="chat-act-btn del" onclick="delChat('${m._id}')" title="Smazat">🗑</button>`:''}
       </div>
     </div>`;
-  }).join('');
+  });
+  el.innerHTML=html;
   if(atBottom)scrollChatBottom();
+  if(msgs.length)_lastReadTs=Math.max(_lastReadTs,(msgs[msgs.length-1].ts?.seconds||0)*1000);
 }
 function scrollChatBottom(){const el=document.getElementById('chatMsgs');if(el)el.scrollTo({top:el.scrollHeight,behavior:'smooth'});}
 
-window.delChat=async id=>{const m=(window._chat||[]).find(x=>x._id===id);if(!m)return;if(!isAdmin()&&m.author!==CU.username){toast('Nemáš oprávnění.');return;}confirmDialog('Smazat tuto zprávu?',async()=>{try{await deleteDoc(doc(db,'chat',id));toast('Zpráva smazána');}catch(e){toast('Chyba: '+e.message);}})};
+window.delChat=async id=>{const m=(window._chat||[]).find(x=>x._id===id);if(!m)return;if(!isAdmin()&&m.author!==CU.username){toast('Nemáš oprávnění.');return;}confirmDialog('Smazat tuto zprávu?',async()=>{try{await deleteDoc(doc(db,'channels',_activeChannelId,'messages',id));toast('Zpráva smazána');}catch(e){toast('Chyba: '+e.message);}})};
 
-window.setReply=id=>{const m=(window._chat||[]).find(x=>x._id===id);if(!m)return;_replyTo=m;const bar=document.getElementById('replyBar');bar.style.display='block';bar.innerHTML=`<div class="reply-preview"><strong>↩ Odpověď: ${esc(m.authorName)}</strong>${esc(m.text.slice(0,60))}<button class="reply-cancel" onclick="cancelReply()">✕</button></div>`;document.getElementById('chatInput').focus();};
+window.setReply=id=>{
+  const m=(window._chat||[]).find(x=>x._id===id);if(!m)return;_replyTo=m;
+  const bar=document.getElementById('replyBar');bar.style.display='block';
+  bar.innerHTML=`<div class="reply-preview"><strong>↩ ${esc(m.authorName||m.author)}</strong>${esc((m.text||'').slice(0,80))}<button class="reply-cancel" onclick="cancelReply()">✕</button></div>`;
+  document.getElementById('chatInput').focus();
+};
 window.cancelReply=()=>{_replyTo=null;const bar=document.getElementById('replyBar');bar.style.display='none';bar.innerHTML='';};
 
-// Reaction picker
 let reactPickerMsg=null;
 window.openReactPicker=(id,e)=>{
-  document.getElementById('reactPicker').style.display='none';
-  reactPickerMsg=id;
+  document.getElementById('reactPicker').style.display='none';reactPickerMsg=id;
   const picker=document.getElementById('reactPicker');
   picker.innerHTML=REACT_EMOJIS.map(em=>`<span class="react-emoji" onclick="toggleReact('${id}','${em}')">${em}</span>`).join('');
   picker.style.display='flex';
   const rect=e.currentTarget.getBoundingClientRect();
-  picker.style.top=(rect.top+window.scrollY-50)+'px';
-  picker.style.left=Math.min(rect.left,window.innerWidth-200)+'px';
+  picker.style.top=Math.max(8,rect.top-54)+'px';picker.style.left=Math.max(8,Math.min(rect.left,window.innerWidth-220))+'px';
 };
 document.addEventListener('click',e=>{if(!e.target.closest('#reactPicker')&&!e.target.closest('.chat-act-btn'))document.getElementById('reactPicker').style.display='none';});
 window.toggleReact=async(id,emoji)=>{
   document.getElementById('reactPicker').style.display='none';
   const m=(window._chat||[]).find(x=>x._id===id);if(!m)return;
-  const reacts=m.reactions||{};const users=reacts[emoji]||[];
-  const hasIt=users.includes(CU.username);
+  const reacts=m.reactions||{};const users=reacts[emoji]||[];const hasIt=users.includes(CU.username);
   const newReacts={...reacts,[emoji]:hasIt?users.filter(u=>u!==CU.username):[...users,CU.username]};
-  try{await updateDoc(doc(db,'chat',id),{reactions:newReacts});}catch(e){toast('Chyba: '+e.message);}
+  try{await updateDoc(doc(db,'channels',_activeChannelId,'messages',id),{reactions:newReacts});}catch(e){toast('Chyba: '+e.message);}
 };
 
 // ── STATS ──────────────────────────────────────────────────────────────────
@@ -2281,6 +3133,10 @@ function startOnline(){
 
   // Sleduj všechny online
   onSnapshot(collection(db,'online'),snap=>{
+    window._onlineData={};
+    snap.docs.forEach(d=>{window._onlineData[d.id]={...d.data(),username:d.id};});
+    // Re-render members panel if open
+    if(document.getElementById('chMembersPanel')?.classList.contains('open')){const ch=_channels.find(c=>c._id===_activeChannelId);renderMembersPanel(ch);}
     const now=Date.now();
     const online=snap.docs
       .map(d=>d.data())
@@ -2290,38 +3146,38 @@ function startOnline(){
     const list=document.getElementById('onlineList');
     if(!section||!list)return;
 
-    if(online.length===0){section.style.display='none';return;}
+    if(online.length===0){section.style.display='none';list.innerHTML='';return;}
     section.style.display='block';
-    // Animate leaving users before re-render
-    const existingNames=new Set(online.map(u=>u.username));
+
+    const allU=window._users||{};
+    const prevNames=new Set([...list.querySelectorAll('[data-uname]')].map(el=>el.getAttribute('data-uname')));
+    const newNames=new Set(online.map(u=>u.username));
+
+    // Remove users who left — animate out then delete
     [...list.querySelectorAll('[data-uname]')].forEach(el=>{
-      if(!existingNames.has(el.getAttribute('data-uname'))&&!el.classList.contains('leaving')){
+      const uname=el.getAttribute('data-uname');
+      if(!newNames.has(uname)){
         el.classList.add('leaving');
+        setTimeout(()=>{if(el.parentNode)el.remove();},280);
       }
     });
 
-    const allU=window._users||{};
-    // Track which users are currently rendered
-    const prevNames=new Set([...list.querySelectorAll('[data-uname]')].map(el=>el.getAttribute('data-uname')));
-    const newNames=new Set(online.map(u=>u.username));
-    // Users who just joined (not in prev)
-    const joining=online.filter(u=>!prevNames.has(u.username));
-    // Users who left (in prev but not in new) - already handled above with .leaving class
+    // Add new users (joining) in sorted order by name
+    online.sort((a,b)=>(a.name||'').localeCompare(b.name||'','cs'));
     online.forEach(u=>{
       const isMe=u.username===CU.username;
       const userDoc=allU[u.username]||{};
       const role=userDoc.role||'';
       const roleLabel=role==='admin'?'Admin':role==='modlitebnik'?'Modlitebník':role==='mladeznik'?'Mládežník':'';
       const roleCls=role==='admin'?'ra':role==='modlitebnik'?'rm':'rml';
-      const isJoining=!prevNames.has(u.username);
-      // Check if element already exists
-      const existing=list.querySelector('[data-uname="'+u.username+'"]');
+      // If already rendered (and not leaving), just update streak
+      const existing=list.querySelector('[data-uname="'+u.username+'"]:not(.leaving)');
       if(existing){
-        // Already rendered, just update streak (no animation)
         const streakEl=existing.querySelector('.online-streak');
         if(streakEl){const s=calcStreakFor(u.username);streakEl.textContent='🔥'+(s>0?s:0);}
         return;
       }
+      const isJoining=prevNames.has(u.username)===false;
       const av=u.emoji
         ?'<div class="online-av-sm ea">'+u.emoji+'</div>'
         :'<div class="online-av-sm">'+ini(u.name)+'</div>';
@@ -2332,19 +3188,17 @@ function startOnline(){
       el.setAttribute('title','Zobrazit profil');
       const s=calcStreakFor(u.username);
       el.innerHTML=av
-        +'<div style="min-width:0"><div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap">'
-        +'<span style="font-size:.78rem">'+esc(u.name)+(isMe?' <span style="color:var(--muted);font-size:.68rem">(ty)</span>':'')+'</span>'
-        +(roleLabel?'<span class="urole '+roleCls+'" style="font-size:.62rem;padding:1px 5px">'+roleLabel+'</span>':'')
-        +'<span class="online-streak" style="font-size:.68rem;color:'+(s>0?'var(--gold)':'var(--muted)')+'">🔥'+(s>0?s:0)+'</span>'
+        +'<div style="min-width:0;overflow:hidden">'
+        +'<div style="display:flex;align-items:center;gap:4px;white-space:nowrap;overflow:hidden">'
+        +'<span style="font-size:.78rem;overflow:hidden;text-overflow:ellipsis;max-width:90px">'+esc(u.name)+(isMe?' <span style="color:var(--muted);font-size:.68rem">(ty)</span>':'')+'</span>'
+        +(roleLabel?'<span class="urole '+roleCls+'" style="font-size:.62rem;padding:1px 5px;flex-shrink:0">'+roleLabel+'</span>':'')
+        +'<span class="online-streak" style="font-size:.68rem;color:'+(s>0?'var(--gold)':'var(--muted)')+';flex-shrink:0">🔥'+(s>0?s:0)+'</span>'
         +'</div></div>';
-      list.appendChild(el);
-    });
-    // Remove elements for users who left (after animation)
-    [...list.querySelectorAll('[data-uname]')].forEach(el=>{
-      if(!newNames.has(el.getAttribute('data-uname'))&&!el.classList.contains('leaving')){
-        el.classList.add('leaving');
-        setTimeout(()=>el.remove(),300);
-      }
+      // Insert in alphabetical order
+      const siblings=[...list.querySelectorAll('[data-uname]:not(.leaving)')];
+      const insertBefore=siblings.find(sib=>(sib.querySelector('span')?.textContent||'').localeCompare(u.name||'','cs')>0);
+      if(insertBefore)list.insertBefore(el,insertBefore);
+      else list.appendChild(el);
     });
   });
 }
@@ -2677,11 +3531,6 @@ window.showUserProfile=(username)=>{
       <span class="urole ${rc[u.role]||'rml'}" style="margin-top:6px;display:inline-block">${rm[u.role]||u.role}</span>
     </div>
     <div style="padding:0 26px 26px">
-      ${streak>0?`<div class="streak-card" style="margin-bottom:14px">
-        <div class="streak-fire">🔥</div>
-        <div><div style="display:flex;align-items:baseline;gap:6px"><div class="streak-num">${streak}</div><div class="streak-lbl">${csStreak(streak)} streak</div></div>
-        <div class="streak-best">Nejlepší: ${bestFor} ${csStreak(bestFor)}</div></div>
-      </div>`:''}
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
         <div class="scard"><div class="snum" style="font-size:1.3rem">${pC+pChk}</div><div class="slbl">Modliteb</div></div>
         <div class="scard"><div class="snum" style="font-size:1.3rem">${rC}</div><div class="slbl">Žádostí</div></div>
@@ -2802,6 +3651,69 @@ function initCustomSelects(root=document){
   });
 }
 window.initCustomSelects=initCustomSelects;
+
+// ── MOBILE CHAT OVERLAYS ──────────────────────────────────────────────────
+function isMobile(){return window.innerWidth<=700;}
+function closeChatOverlays(){
+  const sidebar=document.getElementById('channelSidebar');
+  const members=document.getElementById('chMembersPanel');
+  const backdrop=document.getElementById('chSidebarBackdrop');
+  const channelsBtn=document.getElementById('chChannelsToggle');
+  const membersBtn=document.getElementById('chMembersBtn');
+  if(sidebar)sidebar.classList.remove('mob-open');
+  if(members)members.classList.remove('open');
+  if(backdrop)backdrop.classList.remove('visible');
+  if(channelsBtn)channelsBtn.classList.remove('active');
+  if(membersBtn)membersBtn.classList.remove('active');
+}
+window.toggleMobChannels=function(){
+  if(!isMobile())return;
+  const sidebar=document.getElementById('channelSidebar');
+  const members=document.getElementById('chMembersPanel');
+  const backdrop=document.getElementById('chSidebarBackdrop');
+  const btn=document.getElementById('chChannelsToggle');
+  const membersBtn=document.getElementById('chMembersBtn');
+  const isOpen=sidebar.classList.contains('mob-open');
+  if(isOpen){
+    sidebar.classList.remove('mob-open');
+    backdrop.classList.remove('visible');
+    btn.classList.remove('active');
+  } else {
+    // Close members first
+    if(members)members.classList.remove('open');
+    if(membersBtn)membersBtn.classList.remove('active');
+    sidebar.classList.add('mob-open');
+    backdrop.classList.add('visible');
+    btn.classList.add('active');
+  }
+};
+// Patch toggleMembersPanel to handle mobile overlay
+const _origToggleMembers=window.toggleMembersPanel;
+window.toggleMembersPanel=function(){
+  if(isMobile()){
+    const panel=document.getElementById('chMembersPanel');
+    const sidebar=document.getElementById('channelSidebar');
+    const backdrop=document.getElementById('chSidebarBackdrop');
+    const btn=document.getElementById('chMembersBtn');
+    const channelsBtn=document.getElementById('chChannelsToggle');
+    const isOpen=panel&&panel.classList.contains('open');
+    if(isOpen){
+      if(panel)panel.classList.remove('open');
+      if(backdrop)backdrop.classList.remove('visible');
+      if(btn)btn.classList.remove('active');
+    } else {
+      // Close sidebar first
+      if(sidebar)sidebar.classList.remove('mob-open');
+      if(channelsBtn)channelsBtn.classList.remove('active');
+      if(panel)panel.classList.add('open');
+      if(backdrop)backdrop.classList.add('visible');
+      if(btn)btn.classList.add('active');
+    }
+  } else {
+    if(_origToggleMembers)_origToggleMembers();
+  }
+};
+window.closeChatOverlays=closeChatOverlays;
 
 restoreSession();
 </script>
